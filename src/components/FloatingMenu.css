@@ -1,0 +1,162 @@
+.floating-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.floating-menu {
+  position: relative;
+  width: 90%;
+  max-width: 380px;
+  background: var(--bg-primary);
+  border-radius: 24px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.floating-menu.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.floating-menu-header {
+  position: relative;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu-option.remove {
+  align-self: flex-start;
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--accent-primary);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menu-option.remove:hover {
+  background: rgba(0, 255, 136, 0.25);
+  transform: translateY(-2px);
+}
+
+.menu-option.remove:active {
+  transform: translateY(0);
+}
+
+.option-text {
+  color: #FFD700;
+}
+
+.contact-badge {
+  background: #2d2d2d;
+  border-radius: 24px;
+  padding: 12px 24px;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-name {
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.floating-menu-actions {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-button {
+  background: white;
+  border: none;
+  border-radius: 20px;
+  padding: 14px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.action-button:active {
+  transform: translateY(0);
+}
+
+.action-label {
+  color: #000;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.floating-menu-buttons {
+  padding: 16px 24px 24px;
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+
+.icon-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.icon-button.square {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+.icon-button.dots {
+  background: #6b7aff;
+  color: white;
+}
+
+.icon-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.icon-button:active {
+  transform: translateY(0);
+}

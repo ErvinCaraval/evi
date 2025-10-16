@@ -6,6 +6,11 @@ import FavoriteContact from './FavoriteContact'
 import OnlineUsers from './OnlineUsers'
 import BlockedContact from './BlockedContact'
 import Toast from './Toast'
+import FloatingMenu from './FloatingMenu'
+import HugAnimation from './HugAnimation'
+import PrivateMessage from './PrivateMessage'
+import QRIdentity from './QRIdentity'
+import CommandSuggestions from './CommandSuggestions'
 import { mockUsers, mockMessages, generateRandomReply } from '../utils/mockData'
 
 const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
@@ -21,6 +26,11 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
   const [replyingTo, setReplyingTo] = useState(null)
   const [toast, setToast] = useState({ show: false, message: '', type: 'info' })
   const [isTyping, setIsTyping] = useState(false)
+  const [showFloatingMenu, setShowFloatingMenu] = useState(false)
+  const [showHugAnimation, setShowHugAnimation] = useState(false)
+  const [showPrivateMessage, setShowPrivateMessage] = useState(false)
+  const [showQRIdentity, setShowQRIdentity] = useState(false)
+  const [showCommandSuggestions, setShowCommandSuggestions] = useState(false)
 
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
@@ -106,6 +116,53 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
     showToast(`${selectedContact} añadido a favoritos`, 'success');
   }
 
+  const handleCommandInput = (value) => {
+    setMessage(value)
+    if (value.startsWith('/')) {
+      setShowCommandSuggestions(true)
+
+      if (value.toLowerCase().startsWith('/hug')) {
+        const parts = value.split(' ')
+        if (parts.length > 1) {
+          setTimeout(() => {
+            setShowHugAnimation(true)
+            setMessage('')
+            setShowCommandSuggestions(false)
+          }, 100)
+        }
+      } else if (value.toLowerCase().startsWith('/msg')) {
+        const parts = value.split(' ')
+        if (parts.length > 1) {
+          setTimeout(() => {
+            setShowPrivateMessage(true)
+            setMessage('')
+            setShowCommandSuggestions(false)
+          }, 100)
+        }
+      }
+    } else {
+      setShowCommandSuggestions(false)
+    }
+  }
+
+  const handleSelectCommand = (command) => {
+    setMessage(command)
+    setShowCommandSuggestions(false)
+  }
+
+  const handleSendPrivateMessage = (msg) => {
+    const newMessage = {
+      id: messages.length + 1,
+      text: `[Privado] ${msg}`,
+      time: new Date().toLocaleTimeString(),
+      sender: 'me',
+      status: 'sent',
+      isPrivate: true
+    }
+    setMessages(prev => [...prev, newMessage])
+    showToast('Mensaje privado enviado', 'success')
+  }
+
 return (
     <>
     {toast.show && (
@@ -136,7 +193,17 @@ return (
             </svg>
             <span className="peer-count">0</span>
           </button>
-          <button className="header-btn menu-dots-btn" onClick={() => setShowContactActions(true)}>
+          <button className="header-btn" onClick={() => setShowQRIdentity(true)}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/>
+              <rect x="14" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/>
+              <rect x="3" y="14" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/>
+              <rect x="14" y="14" width="3" height="3" fill="var(--text-secondary)"/>
+              <rect x="18" y="14" width="3" height="3" fill="var(--text-secondary)"/>
+              <rect x="14" y="18" width="3" height="3" fill="var(--text-secondary)"/>
+            </svg>
+          </button>
+          <button className="header-btn menu-dots-btn" onClick={() => setShowFloatingMenu(true)}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="6" r="2" fill="var(--text-secondary)"/>
               <circle cx="12" cy="12" r="2" fill="var(--text-secondary)"/>
@@ -157,6 +224,13 @@ return (
 
 
       <div className="chat-input-container">
+        {showCommandSuggestions && (
+          <CommandSuggestions
+            input={message}
+            onSelectCommand={handleSelectCommand}
+            onClose={() => setShowCommandSuggestions(false)}
+          />
+        )}
         <div className="input-wrapper">
           <button className="attach-btn" onClick={handleAddAttachment}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -169,13 +243,17 @@ return (
             className="message-input"
             placeholder="Type a message..."
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-            onFocus={onOpenCommands}
+            onChange={(e) => handleCommandInput(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                if (!showCommandSuggestions) {
+                  handleSendMessage()
+                }
+              }
+            }}
             onKeyDown={(e) => {
-              if (e.key === '/') {
+              if (e.key === 'Tab' && showCommandSuggestions) {
                 e.preventDefault()
-                onOpenCommands()
               }
             }}
           />
@@ -238,6 +316,48 @@ return (
         onClose={() => setShowBlockedContact(false)}
         showToast={showToast}
       />
+    )}
+
+    {showFloatingMenu && (
+      <FloatingMenu
+        contactName={selectedContact}
+        onClose={() => setShowFloatingMenu(false)}
+        onRemove={() => {
+          showToast('Usuario quitado', 'success')
+          setShowFloatingMenu(false)
+        }}
+        onViewOnline={() => {
+          setShowFloatingMenu(false)
+          setShowOnlineUsers(true)
+        }}
+        onFavorite={() => {
+          handleFavoriteContact()
+          setShowFloatingMenu(false)
+        }}
+        onBlock={() => {
+          handleBlockContact()
+          setShowFloatingMenu(false)
+        }}
+      />
+    )}
+
+    {showHugAnimation && (
+      <HugAnimation
+        contactName={selectedContact}
+        onClose={() => setShowHugAnimation(false)}
+      />
+    )}
+
+    {showPrivateMessage && (
+      <PrivateMessage
+        contactName={selectedContact}
+        onClose={() => setShowPrivateMessage(false)}
+        onSend={handleSendPrivateMessage}
+      />
+    )}
+
+    {showQRIdentity && (
+      <QRIdentity onClose={() => setShowQRIdentity(false)} />
     )}
     </>
   )
