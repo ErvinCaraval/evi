@@ -22,11 +22,11 @@ const LocationPermission = ({ onNext, showToast }) => {
     }, 300)
   }
 
-  return (
-    <div className={`permission-modal ${isVisible ? 'visible' : ''}`}>
-      <div className="permission-backdrop" onClick={() => handleOption('deny')} />
+return (
+  <div className={`permission-modal ${isVisible ? 'visible' : ''}`} role="dialog" aria-modal="true" aria-label="Permiso de ubicación">
+    <div className="permission-backdrop" onClick={() => handleOption('deny')} />
 
-      <div className="permission-card">
+    <div className="permission-card">
         <div className="permission-icon-wrapper">
           <div className="permission-icon location-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
@@ -56,6 +56,7 @@ const LocationPermission = ({ onNext, showToast }) => {
           <button
             className={`location-option ${selected === 'precise' ? 'selected' : ''}`}
             onClick={() => handleOption('precise')}
+            aria-label="Usar ubicación precisa"
           >
             <div className="location-visual precise">
               <svg viewBox="0 0 120 120" width="120" height="120">
@@ -113,6 +114,7 @@ const LocationPermission = ({ onNext, showToast }) => {
           <button
             className={`location-option ${selected === 'approximate' ? 'selected' : ''}`}
             onClick={() => handleOption('approximate')}
+            aria-label="Usar ubicación aproximada"
           >
             <div className="location-visual approximate">
               <svg viewBox="0 0 120 120" width="120" height="120">
@@ -187,18 +189,21 @@ const LocationPermission = ({ onNext, showToast }) => {
           <button
             className="permission-btn primary"
             onClick={() => handleOption(selected || 'approximate')}
+            aria-label="Permitir mientras uso la app"
           >
             Mientras uso la app
           </button>
           <button
             className="permission-btn secondary"
             onClick={() => handleOption('once')}
+            aria-label="Permitir solo esta vez"
           >
             Solo esta vez
           </button>
           <button
             className="permission-btn tertiary"
             onClick={() => handleOption('deny')}
+            aria-label="No permitir ubicación"
           >
             No permitir
           </button>

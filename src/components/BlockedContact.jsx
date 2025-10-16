@@ -8,7 +8,7 @@ const BlockedContact = ({ contactName, onUnblock, onClose, showToast }) => {
   }
 
   return (
-    <div className="blocked-contact-overlay" onClick={onClose}>
+    <div className="blocked-contact-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label="Contacto bloqueado">
       <div className="blocked-contact-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="blocked-dialog-header">
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" className="blocked-icon-large">
@@ -22,10 +22,10 @@ const BlockedContact = ({ contactName, onUnblock, onClose, showToast }) => {
         </div>
 
         <div className="blocked-dialog-actions">
-          <button className="blocked-dialog-btn secondary" onClick={onClose}>
+          <button className="blocked-dialog-btn secondary" onClick={onClose} aria-label="Cerrar diálogo de contacto bloqueado">
             Cerrar
           </button>
-          <button className="blocked-dialog-btn unblock" onClick={handleUnblock}>
+          <button className="blocked-dialog-btn unblock" onClick={handleUnblock} aria-label="Desbloquear contacto">
             Desbloquear
           </button>
         </div>

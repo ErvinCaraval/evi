@@ -10,6 +10,7 @@
   align-items: center;
   justify-content: center;
   animation: fadeIn 0.2s ease;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
 }
 
 @keyframes fadeIn {
@@ -34,6 +35,8 @@
   opacity: 0;
   transform: scale(0.8) translateY(20px);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-height: calc(100vh - (var(--safe-top) + var(--safe-bottom) + 32px));
+  overflow: hidden;
 }
 
 .floating-menu.visible {
@@ -213,6 +216,13 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+}
+
+@media (max-width: 600px) {
+  .floating-menu { max-width: 96vw; }
+  .menu-option.remove { padding: 12px 20px; font-size: 15px; }
+  .action-button { padding: 12px 20px; }
+  .icon-button { width: 52px; height: 52px; }
 }
 
 .icon-button.square {

@@ -137,6 +137,8 @@
   flex-direction: column;
   gap: 16px;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -194,7 +196,9 @@
   background: var(--bg-secondary);
   padding: 10px 16px;
   border-radius: 16px;
-  max-width: 70%;
+  max-width: 80%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .message-time {
@@ -213,6 +217,7 @@
   z-index: 10;
   backdrop-filter: blur(10px);
   position: relative;
+  padding-bottom: calc(20px + var(--safe-bottom));
 }
 
 .input-wrapper {
@@ -349,6 +354,27 @@
   resize: none;
   padding: 4px 0;
   transition: all 0.2s ease;
+}
+
+/* Mobile tweaks for touch targets and typography */
+@media (max-width: 600px) {
+  .chat-title { font-size: 16px; }
+  .user-name { font-size: 14px; }
+  .header-btn {
+    min-width: 44px;
+    height: 44px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+  .chat-messages {
+    padding: 16px 12px 96px; /* leave room for input */
+    scroll-padding-bottom: 96px;
+  }
+  .send-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .attach-btn { padding: 10px; }
 }
 
 .input-wrapper.focused .message-input {

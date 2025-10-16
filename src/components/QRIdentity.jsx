@@ -13,12 +13,12 @@ const QRIdentity = ({ onClose }) => {
     setTimeout(onClose, 300)
   }
 
-  return (
-    <div className="qr-overlay" onClick={handleClose}>
-      <div
-        className={`qr-container ${isVisible ? 'visible' : ''}`}
-        onClick={(e) => e.stopPropagation()}
-      >
+return (
+  <div className="qr-overlay" onClick={handleClose} role="dialog" aria-modal="true" aria-label="Identidad QR">
+    <div
+      className={`qr-container ${isVisible ? 'visible' : ''}`}
+      onClick={(e) => e.stopPropagation()}
+    >
         <div className="qr-header">
           <h2 className="qr-title">Escanea este código para confirmar mi identidad en Bitchat</h2>
         </div>
@@ -98,12 +98,8 @@ const QRIdentity = ({ onClose }) => {
         </div>
 
         <div className="qr-actions">
-          <button className="qr-button primary">
-            Escanear QR de otra persona
-          </button>
-          <button className="qr-button secondary" onClick={handleClose}>
-            Compartir QR
-          </button>
+          <button className="qr-button primary" aria-label="Escanear código QR de otra persona">Escanear QR de otra persona</button>
+          <button className="qr-button secondary" onClick={handleClose} aria-label="Compartir mi código QR">Compartir QR</button>
         </div>
       </div>
     </div>

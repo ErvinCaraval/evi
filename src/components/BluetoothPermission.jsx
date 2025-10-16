@@ -20,11 +20,11 @@ const BluetoothPermission = ({ onNext }) => {
     }, 300)
   }
 
-  return (
-    <div className={`permission-modal ${isVisible ? 'visible' : ''}`}>
-      <div className="permission-backdrop" onClick={handleDeny} />
+return (
+  <div className={`permission-modal ${isVisible ? 'visible' : ''}`} role="dialog" aria-modal="true" aria-label="Permiso de Bluetooth">
+    <div className="permission-backdrop" onClick={handleDeny} />
 
-      <div className="permission-card">
+    <div className="permission-card">
         <div className="permission-icon-wrapper">
           <div className="permission-icon bluetooth-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
@@ -86,10 +86,10 @@ const BluetoothPermission = ({ onNext }) => {
         </div>
 
         <div className="permission-actions">
-          <button className="permission-btn primary" onClick={handleAllow}>
+          <button className="permission-btn primary" onClick={handleAllow} aria-label="Permitir conexión Bluetooth">
             Permitir
           </button>
-          <button className="permission-btn tertiary" onClick={handleDeny}>
+          <button className="permission-btn tertiary" onClick={handleDeny} aria-label="No permitir conexión Bluetooth">
             No permitir
           </button>
         </div>

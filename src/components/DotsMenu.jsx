@@ -2,7 +2,7 @@ import './DotsMenu.css'
 
 const DotsMenu = ({ onClose }) => {
   return (
-    <div className="dots-menu-overlay" onClick={onClose}>
+    <div className="dots-menu-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label="Opciones avanzadas">
       <div className="dots-menu-panel" onClick={(e) => e.stopPropagation()}>
         <div className="dots-menu-header">
           <div className="dots-icon-large">
@@ -16,7 +16,7 @@ const DotsMenu = ({ onClose }) => {
         </div>
 
         <div className="dots-menu-content">
-          <button className="dots-option-item">
+          <button className="dots-option-item" aria-label="Editar perfil">
             <div className="dots-option-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"
@@ -32,7 +32,7 @@ const DotsMenu = ({ onClose }) => {
             </svg>
           </button>
 
-          <button className="dots-option-item">
+          <button className="dots-option-item" aria-label="Cambiar fondos de chat">
             <div className="dots-option-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
@@ -48,7 +48,7 @@ const DotsMenu = ({ onClose }) => {
             </svg>
           </button>
 
-          <button className="dots-option-item">
+          <button className="dots-option-item" aria-label="Ver mensajes guardados">
             <div className="dots-option-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"
@@ -64,7 +64,7 @@ const DotsMenu = ({ onClose }) => {
             </svg>
           </button>
 
-          <button className="dots-option-item">
+          <button className="dots-option-item" aria-label="Administrar ubicación compartida">
             <div className="dots-option-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M9 2v4M15 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"
@@ -80,7 +80,7 @@ const DotsMenu = ({ onClose }) => {
             </svg>
           </button>
 
-          <button className="dots-option-item">
+          <button className="dots-option-item" aria-label="Ayuda y soporte">
             <div className="dots-option-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="3" stroke="var(--accent-primary)" strokeWidth="2" fill="none"/>
@@ -117,7 +117,7 @@ const DotsMenu = ({ onClose }) => {
           </button>
         </div>
 
-        <button className="dots-menu-close" onClick={onClose}>
+        <button className="dots-menu-close" onClick={onClose} aria-label="Cerrar opciones avanzadas">
           Cerrar
         </button>
       </div>

@@ -22,11 +22,11 @@ const NotificationPermission = ({ onNext, showToast }) => {
     }, 300)
   }
 
-  return (
-    <div className={`permission-modal ${isVisible ? 'visible' : ''}`}>
-      <div className="permission-backdrop" onClick={handleDeny} />
+return (
+  <div className={`permission-modal ${isVisible ? 'visible' : ''}`} role="dialog" aria-modal="true" aria-label="Permiso de notificaciones">
+    <div className="permission-backdrop" onClick={handleDeny} />
 
-      <div className="permission-card">
+    <div className="permission-card">
         <div className="permission-icon-wrapper">
           <div className="permission-icon notification-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
@@ -165,10 +165,10 @@ const NotificationPermission = ({ onNext, showToast }) => {
         </div>
 
         <div className="permission-actions">
-          <button className="permission-btn primary" onClick={handleAllow}>
+          <button className="permission-btn primary" onClick={handleAllow} aria-label="Permitir notificaciones">
             Permitir notificaciones
           </button>
-          <button className="permission-btn tertiary" onClick={handleDeny}>
+          <button className="permission-btn tertiary" onClick={handleDeny} aria-label="Omitir notificaciones">
             Omitir
           </button>
         </div>

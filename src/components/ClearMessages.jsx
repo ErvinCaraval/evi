@@ -9,9 +9,9 @@ const ClearMessages = ({ onConfirm, onCancel, showToast }) => {
     onConfirm()
   }
 
-  return (
-    <div className="clear-messages-overlay" onClick={onCancel}>
-      <div className="clear-messages-dialog" onClick={(e) => e.stopPropagation()}>
+return (
+  <div className="clear-messages-overlay" onClick={onCancel} role="dialog" aria-modal="true" aria-label="Limpiar mensajes">
+    <div className="clear-messages-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="clear-dialog-header">
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" className="clear-icon-large">
             <path d="M3 6h18M8 6V4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v2m3 0v14c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V6h14z"
@@ -25,10 +25,10 @@ const ClearMessages = ({ onConfirm, onCancel, showToast }) => {
         </div>
 
         <div className="clear-dialog-actions">
-          <button className="clear-dialog-btn secondary" onClick={onCancel}>
+          <button className="clear-dialog-btn secondary" onClick={onCancel} aria-label="Cancelar y cerrar">
             Cancelar
           </button>
-          <button className="clear-dialog-btn danger" onClick={handleConfirm}>
+          <button className="clear-dialog-btn danger" onClick={handleConfirm} aria-label="Confirmar limpiar mensajes">
             Limpiar
           </button>
         </div>

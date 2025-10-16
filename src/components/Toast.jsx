@@ -11,7 +11,7 @@ const Toast = ({ message, duration = 3000, onClose }) => {
   }, [duration, onClose]);
 
   return (
-    <div className="toast-notification">
+    <div className="toast-notification" role="status" aria-live="polite">
       {message}
     </div>
   );

@@ -22,16 +22,16 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
     }
   }
 
-  return (
-    <div className="contact-actions-overlay" onClick={onClose}>
-      <div className="contact-actions-sheet" onClick={(e) => e.stopPropagation()}>
+return (
+  <div className="contact-actions-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label="Opciones de chat">
+    <div className="contact-actions-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="sheet-header">
           <div className="sheet-handle"></div>
           <h3 className="sheet-title">Opciones de chat</h3>
         </div>
 
         <div className="sheet-content">
-          <button className="action-item" onClick={handleViewOnline}>
+          <button className="action-item" onClick={handleViewOnline} aria-label="Ver usuarios en línea">
             <div className="action-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
@@ -44,7 +44,7 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
             </div>
           </button>
 
-          <button className="action-item" onClick={handleFavorite}>
+          <button className="action-item" onClick={handleFavorite} aria-label="Marcar como favorito">
             <div className="action-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
@@ -57,7 +57,7 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
             </div>
           </button>
 
-          <button className="action-item" onClick={handleClearChat}>
+          <button className="action-item" onClick={handleClearChat} aria-label="Limpiar mensajes">
             <div className="action-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M3 6h18M8 6V4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v2m3 0v14c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V6h14z"
@@ -72,7 +72,7 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
 
           <div className="divider"></div>
 
-          <button className="action-item danger" onClick={onBlock}>
+          <button className="action-item danger" onClick={onBlock} aria-label="Bloquear contacto">
             <div className="action-icon danger">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
@@ -86,7 +86,7 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
           </button>
         </div>
 
-        <button className="sheet-cancel" onClick={onClose}>
+        <button className="sheet-cancel" onClick={onClose} aria-label="Cancelar y cerrar">
           Cancelar
         </button>
       </div>

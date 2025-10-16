@@ -21,8 +21,8 @@ const PrivateMessage = ({ contactName, onClose, onSend }) => {
     }
   }
 
-  return (
-    <div className="private-message-overlay" onClick={handleClose}>
+return (
+  <div className="private-message-overlay" onClick={handleClose} role="dialog" aria-modal="true" aria-label="Mensaje privado">
       <div
         className={`private-message-container ${isVisible ? 'visible' : ''}`}
         onClick={(e) => e.stopPropagation()}
@@ -45,16 +45,18 @@ const PrivateMessage = ({ contactName, onClose, onSend }) => {
           <div className="message-input-area">
             <textarea
               className="private-textarea"
-              placeholder="Mensaje..."
+              placeholder="Escribe un mensaje privado"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               autoFocus
+              aria-label="Mensaje privado"
+              enterKeyHint="send"
             />
           </div>
         </div>
 
         <div className="private-buttons">
-          <button className="private-icon-btn hand">
+          <button className="private-icon-btn hand" aria-label="Reaccionar con saludo">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
               <path d="M8 9 L10 11 L8 13 M12 8 L14 10 L12 12 M16 9 L18 11 L16 13"
@@ -62,13 +64,13 @@ const PrivateMessage = ({ contactName, onClose, onSend }) => {
             </svg>
           </button>
 
-          <button className="private-icon-btn square">
+          <button className="private-icon-btn square" aria-label="Acciones de mensaje privado">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/>
             </svg>
           </button>
 
-          <button className="private-icon-btn dots">
+          <button className="private-icon-btn dots" aria-label="Más opciones de mensaje privado">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <circle cx="6" cy="12" r="2" fill="currentColor"/>
               <circle cx="12" cy="12" r="2" fill="currentColor"/>

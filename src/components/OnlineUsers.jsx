@@ -8,7 +8,7 @@ const OnlineUsers = ({ users, onUserSelect, onFavorite, onBlock, onClose }) => {
   ]
 
   return (
-    <div className="online-users-overlay" onClick={onClose}>
+    <div className="online-users-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label="Usuarios en línea">
       <div className="online-users-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="online-sheet-header">
           <div className="sheet-handle"></div>
@@ -40,7 +40,7 @@ const OnlineUsers = ({ users, onUserSelect, onFavorite, onBlock, onClose }) => {
           ))}
         </div>
 
-        <button className="online-sheet-cancel" onClick={onClose}>
+        <button className="online-sheet-cancel" onClick={onClose} aria-label="Cerrar lista de usuarios en línea">
           Cerrar
         </button>
       </div>

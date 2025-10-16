@@ -49,6 +49,12 @@ body {
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Safe area insets */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
 }
 
 body {
@@ -57,10 +63,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #fff;
   color: var(--text-primary);
   line-height: 1.5;
   overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 #root {
@@ -69,7 +75,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
 }
 
 .smartphone-frame {
@@ -81,14 +86,15 @@ body {
   max-width: 480px;
   min-height: 100vh;
   height: 100%;
-  padding-bottom: var(--spacing-lg);
-  padding-top: var(--spacing-lg);
+  padding-bottom: max(var(--spacing-lg), var(--safe-bottom));
+  padding-top: max(var(--spacing-lg), var(--safe-top));
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
   overflow-y: auto;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .smartphone-content {
@@ -108,6 +114,11 @@ button {
 input {
   font-family: inherit;
   outline: none;
+}
+
+button, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 @keyframes fadeIn {
@@ -168,7 +179,21 @@ input {
     border-radius: 0;
     margin: 0;
     box-shadow: none;
-    padding-bottom: 0;
-    padding-top: 0;
+    padding-bottom: var(--safe-bottom);
+    padding-top: var(--safe-top);
   }
+}
+
+/* Prefer dynamic viewport units where supported */
+@supports (height: 100dvh) {
+  #root { min-height: 100dvh; }
+  .smartphone-frame {
+    min-height: 100dvh;
+    height: 100dvh;
+  }
+}
+
+/* Ensure dark background wins over accidental overrides */
+body {
+  background-color: var(--bg-primary);
 }

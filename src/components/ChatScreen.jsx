@@ -181,24 +181,24 @@ return (
     )}
 
     <div className="chat-screen">
-      <div className="chat-header">
+      <div className="chat-header" role="banner">
         <div className="header-left">
-          <h1 className="chat-title">bitchat</h1>
-          <span className="user-name">/@anon9680</span>
+          <h1 className="chat-title" aria-label="Nombre de la aplicación">bitchat</h1>
+          <span className="user-name" aria-label="Tu usuario">/@anon9680</span>
         </div>
 
         <div className="header-right">
-          <button className="header-btn" onClick={onOpenChannels}>
-            <span className="mesh-label">#mesh</span>
+          <button className="header-btn" onClick={onOpenChannels} aria-label="Abrir canales de ubicación">
+            <span className="mesh-label">#Canales</span>
           </button>
-          <button className="header-btn" onClick={onOpenNetwork}>
+          <button className="header-btn" onClick={onOpenNetwork} aria-label="Usuarios en la red">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
                     fill="var(--text-secondary)"/>
             </svg>
             <span className="peer-count">0</span>
           </button>
-          <button className="header-btn" onClick={() => setShowQRIdentity(true)}>
+          <button className="header-btn" onClick={() => setShowQRIdentity(true)} aria-label="Mostrar mi identidad QR">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <rect x="3" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/>
               <rect x="14" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/>
@@ -208,7 +208,7 @@ return (
               <rect x="14" y="18" width="3" height="3" fill="var(--text-secondary)"/>
             </svg>
           </button>
-          <button className="header-btn menu-dots-btn" onClick={() => setShowFloatingMenu(true)}>
+          <button className="header-btn menu-dots-btn" onClick={() => setShowFloatingMenu(true)} aria-label="Abrir menú rápido">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="6" r="2" fill="var(--text-secondary)"/>
               <circle cx="12" cy="12" r="2" fill="var(--text-secondary)"/>
@@ -218,7 +218,7 @@ return (
         </div>
       </div>
 
-      <div className="chat-messages">
+      <div className="chat-messages" role="log" aria-live="polite">
         {messages.map((msg) => (
           <div key={msg.id} className={`message ${msg.isSystem ? 'system-message' : ''}`}>
             <span className="message-text">{msg.text}</span>
@@ -228,7 +228,7 @@ return (
       </div>
 
 
-      <div className="chat-input-container">
+      <div className="chat-input-container" role="form" aria-label="Enviar mensaje">
         {showCommandSuggestions && (
           <CommandSuggestions
             input={message}
@@ -237,7 +237,7 @@ return (
           />
         )}
         <div className={`input-wrapper ${isInputFocused || message ? 'focused' : ''}`}>
-          <button className="attach-btn" onClick={handleAddAttachment}>
+          <button className="attach-btn" onClick={handleAddAttachment} aria-label="Abrir acciones de contacto">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M12 5v14M5 12h14" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/>
             </svg>
@@ -246,11 +246,15 @@ return (
           <input
             type="text"
             className="message-input"
-            placeholder="Type a message..."
+            placeholder="Escribe un mensaje"
             value={message}
             onChange={(e) => handleCommandInput(e.target.value)}
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
+            aria-label="Caja de mensaje"
+            inputMode="text"
+            autoComplete="off"
+            enterKeyHint="send"
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 if (!showCommandSuggestions) {
@@ -265,16 +269,14 @@ return (
             }}
           />
 
-          <button className="send-btn" onClick={handleSendMessage}>
+          <button className="send-btn" onClick={handleSendMessage} aria-label="Enviar mensaje" disabled={!message.trim()}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" fill="var(--accent-primary)"/>
             </svg>
           </button>
         </div>
 
-        <div className="input-hint">
-          type a message...
-        </div>
+        <div className="input-hint">Consejo: usa / para ver comandos rápidos</div>
       </div>
     </div>
 

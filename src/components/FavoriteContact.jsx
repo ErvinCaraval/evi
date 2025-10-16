@@ -7,7 +7,7 @@ const FavoriteContact = ({ contactName, onAdd, onFavorite, onBlock, onClose }) =
   }
 
   return (
-    <div className="favorite-contact-overlay" onClick={onClose}>
+    <div className="favorite-contact-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label="Agregar a favoritos">
       <div className="favorite-contact-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="favorite-dialog-header">
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" className="favorite-icon-large">
@@ -21,10 +21,10 @@ const FavoriteContact = ({ contactName, onAdd, onFavorite, onBlock, onClose }) =
         </div>
 
         <div className="favorite-dialog-actions">
-          <button className="favorite-dialog-btn secondary" onClick={onClose}>
+          <button className="favorite-dialog-btn secondary" onClick={onClose} aria-label="Cancelar y cerrar">
             Cancelar
           </button>
-          <button className="favorite-dialog-btn primary" onClick={handleAddFavorite}>
+          <button className="favorite-dialog-btn primary" onClick={handleAddFavorite} aria-label="Confirmar agregar a favoritos">
             Agregar
           </button>
         </div>

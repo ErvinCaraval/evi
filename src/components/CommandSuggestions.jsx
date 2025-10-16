@@ -8,70 +8,70 @@ const CommandSuggestions = ({ input, onSelectCommand, onClose }) => {
     {
       command: '/hug',
       args: '<nickname>',
-      description: 'send someone a warm hug',
+      description: 'enviar un abrazo',
       example: '/hug anon64',
       color: '#00ffff'
     },
     {
       command: '/msg',
       args: '<nickname> [message]',
-      description: 'send private message',
+      description: 'enviar mensaje privado',
       example: '/msg anon64 Hola, este es un mensaje privado',
       color: '#ff4444'
     },
     {
       command: '/slap',
       args: '<nickname>',
-      description: 'slap someone with a trout',
+      description: 'dar un sopapo (diversión)',
       example: '/slap anon64',
       color: '#ff6b6b'
     },
     {
       command: '/w',
       args: '',
-      description: "see who's online",
+      description: 'ver quién está en línea',
       example: '/w',
       color: '#00ff88'
     },
     {
       command: '/unfav',
       args: '<nickname>',
-      description: 'remove from favorites',
+      description: 'quitar de favoritos',
       example: '/unfav anon64',
       color: '#ffd700'
     },
     {
       command: '/block',
       args: '[nickname]',
-      description: 'block or list blocked peers',
+      description: 'bloquear o ver bloqueados',
       example: '/block anon64',
       color: '#ff4444'
     },
     {
       command: '/unblock',
       args: '<nickname>',
-      description: 'unblock a peer',
+      description: 'desbloquear un usuario',
       example: '/unblock anon64',
       color: '#00ff88'
     },
     {
       command: '/clear',
       args: '',
-      description: 'clear chat messages',
+      description: 'limpiar mensajes del chat',
       example: '/clear',
       color: '#ff9500'
     },
     {
       command: '/channels',
       args: '',
-      description: 'show all discovered channels',
+      description: 'mostrar canales encontrados',
       example: '/channels',
       color: '#00ccff'
     },
     {
       command: '/join',
       args: '<channel>',
-      description: 'join or create a channel',
+      description: 'unirse o crear un canal',
       example: '/join general',
       color: '#00ff88'
     }
@@ -99,7 +99,7 @@ const CommandSuggestions = ({ input, onSelectCommand, onClose }) => {
 
   return (
     <div className="command-suggestions" ref={suggestionsRef}>
-      <div className="suggestions-header">
+      <div className="suggestions-header" role="status" aria-live="polite">
         <span className="suggestions-title">Comandos disponibles</span>
         <span className="suggestions-count">{filteredCommands.length}</span>
       </div>
@@ -110,6 +110,7 @@ const CommandSuggestions = ({ input, onSelectCommand, onClose }) => {
             key={index}
             className="suggestion-item"
             onClick={() => onSelectCommand(cmd.example)}
+            aria-label={`Usar comando ${cmd.command}`}
           >
             <div className="suggestion-left">
               <div className="command-indicator" style={{ background: cmd.color }}></div>
@@ -118,7 +119,7 @@ const CommandSuggestions = ({ input, onSelectCommand, onClose }) => {
                   <span className="cmd-name">{cmd.command}</span>
                   {cmd.args && <span className="cmd-args">{cmd.args}</span>}
                 </div>
-                <div className="suggestion-description">{cmd.description}</div>
+              <div className="suggestion-description">{cmd.description}</div>
               </div>
             </div>
             <div className="suggestion-arrow">

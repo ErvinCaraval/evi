@@ -1,7 +1,7 @@
 .message-container {
   position: relative;
   margin: 8px 0;
-  max-width: 80%;
+  max-width: 88%;
   animation: messageAppear 0.3s ease-out;
   user-select: none;
   padding: 0 16px;
@@ -61,7 +61,9 @@
 .message-text {
   margin: 0;
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.5;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .message-time {
@@ -69,4 +71,9 @@
   opacity: 0.7;
   margin-top: 4px;
   display: block;
+}
+
+@media (max-width: 600px) {
+  .message-bubble { padding: 12px 14px; }
+  .message-text { font-size: 15px; }
 }
