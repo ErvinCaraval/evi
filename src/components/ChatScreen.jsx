@@ -5,6 +5,7 @@ import ContactActions from './ContactActions'
 import FavoriteContact from './FavoriteContact'
 import OnlineUsers from './OnlineUsers'
 import BlockedContact from './BlockedContact'
+import Toast from './Toast'
 import { mockUsers, mockMessages, generateRandomReply } from '../utils/mockData'
 
 const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
@@ -17,6 +18,14 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
   const [showOnlineUsers, setShowOnlineUsers] = useState(false)
   const [showBlockedContact, setShowBlockedContact] = useState(false)
   const [selectedContact, setSelectedContact] = useState('anon64')
+  const [replyingTo, setReplyingTo] = useState(null)
+  const [toast, setToast] = useState({ show: false, message: '', type: 'info' })
+  const [isTyping, setIsTyping] = useState(false)
+
+  const showToast = (message, type = 'success') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000);
+  }
 
   const handleSendMessage = () => {
     if (message.trim()) {
@@ -24,21 +33,49 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
         id: messages.length + 1,
         text: message.trim(),
         time: new Date().toLocaleTimeString(),
-        sender: 'me'
+        sender: 'me',
+        status: 'sending',
+        replyTo: replyingTo
       }
       setMessages(prev => [...prev, newMessage])
       setMessage('')
+      setReplyingTo(null)
       
-      // Simulate reply after a short delay
+      // Simulate message states
+      setTimeout(() => {
+        setMessages(prev => 
+          prev.map(msg => 
+            msg.id === newMessage.id ? { ...msg, status: 'sent' } : msg
+          )
+        )
+      }, 500)
+
+      setTimeout(() => {
+        setMessages(prev => 
+          prev.map(msg => 
+            msg.id === newMessage.id ? { ...msg, status: 'delivered' } : msg
+          )
+        )
+      }, 1000)
+
+      // Simulate reply after a delay
       setTimeout(() => {
         const reply = {
           id: messages.length + 2,
           text: generateRandomReply(),
           time: new Date().toLocaleTimeString(),
-          sender: selectedContact
+          sender: selectedContact,
+          status: 'sent'
         }
         setMessages(prev => [...prev, reply])
-      }, 1000)
+
+        // Mark previous message as read
+        setMessages(prev => 
+          prev.map(msg => 
+            msg.id === newMessage.id ? { ...msg, status: 'read' } : msg
+          )
+        )
+      }, 2000)
     }
   }
 
@@ -48,7 +85,8 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
 
   const handleClearMessages = () => {
     setShowClearMessages(false)
-    console.log('Messages cleared')
+    setMessages([]);
+    showToast('Mensajes eliminados correctamente', 'success');
   }
 
   const handleBlockContact = () => {
@@ -56,19 +94,30 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
     setShowFavoriteContact(false)
     setShowOnlineUsers(false)
     setShowBlockedContact(true)
+    showToast(`Se ha bloqueado a ${selectedContact}`, 'success');
   }
 
   const handleUnblockContact = () => {
     setShowBlockedContact(false)
-    console.log('Contact unblocked')
+    showToast(`Se ha desbloqueado a ${selectedContact}`, 'success');
   }
 
   const handleFavoriteContact = () => {
-    console.log('Contact marked as favorite')
+    showToast(`${selectedContact} añadido a favoritos`, 'success');
   }
 
 return (
     <>
+    {toast.show && (
+      <div className="toast-container">
+        <Toast 
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast({ show: false, message: '', type: 'info' })}
+        />
+      </div>
+    )}
+
     <div className="chat-screen">
       <div className="chat-header">
         <div className="header-left">
@@ -148,6 +197,7 @@ return (
       <ClearMessages
         onConfirm={handleClearMessages}
         onCancel={() => setShowClearMessages(false)}
+        showToast={showToast}
       />
     )}
 
@@ -156,6 +206,7 @@ return (
         contactName={selectedContact}
         onBlock={handleBlockContact}
         onClose={() => setShowContactActions(false)}
+        showToast={showToast}
       />
     )}
 
@@ -166,6 +217,7 @@ return (
         onFavorite={handleFavoriteContact}
         onBlock={handleBlockContact}
         onClose={() => setShowFavoriteContact(false)}
+        showToast={showToast}
       />
     )}
 
@@ -175,6 +227,7 @@ return (
         onFavorite={handleFavoriteContact}
         onBlock={handleBlockContact}
         onClose={() => setShowOnlineUsers(false)}
+        showToast={showToast}
       />
     )}
 
@@ -183,6 +236,7 @@ return (
         contactName={selectedContact}
         onUnblock={handleUnblockContact}
         onClose={() => setShowBlockedContact(false)}
+        showToast={showToast}
       />
     )}
     </>

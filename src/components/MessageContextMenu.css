@@ -1,0 +1,61 @@
+.context-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.message-context-menu {
+  position: fixed;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 8px 0;
+  min-width: 200px;
+  z-index: 1001;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: scaleIn 0.15s ease-out;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  width: 100%;
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.context-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.context-menu-item.delete {
+  color: #ff4d4d;
+}
+
+.context-menu-item.delete:hover {
+  background-color: rgba(255, 77, 77, 0.1);
+}
+
+.context-menu-icon {
+  font-size: 18px;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

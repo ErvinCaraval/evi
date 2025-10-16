@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './PermissionModal.css'
 
-const LocationPermission = ({ onNext }) => {
+const LocationPermission = ({ onNext, showToast }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [selected, setSelected] = useState(null)
 
@@ -11,6 +11,12 @@ const LocationPermission = ({ onNext }) => {
 
   const handleOption = (option) => {
     setSelected(option)
+    if (showToast) {
+      if (option === 'deny') showToast('Permiso de ubicación denegado', 'info')
+      else if (option === 'precise') showToast('Ubicación precisa activada', 'success')
+      else if (option === 'approximate') showToast('Ubicación aproximada activada', 'success')
+      else if (option === 'once') showToast('Ubicación activada solo una vez', 'success')
+    }
     setTimeout(() => {
       onNext()
     }, 300)

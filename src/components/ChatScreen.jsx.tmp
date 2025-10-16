@@ -1,0 +1,250 @@
+import { useState, useEffect } from 'react'
+import './ChatScreen.css'
+import ClearMessages from './ClearMessages'
+import ContactActions from './ContactActions'
+import FavoriteContact from './FavoriteContact'
+import OnlineUsers from './OnlineUsers'
+import BlockedContact from './BlockedContact'
+import Toast from './Toast'
+import { mockUsers, mockMessages, generateRandomReply } from '../utils/mockData'
+
+const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
+  const [message, setMessage] = useState('')
+  const [messages, setMessages] = useState(mockMessages)
+  const [contacts, setContacts] = useState(mockUsers)
+  const [showClearMessages, setShowClearMessages] = useState(false)
+  const [showContactActions, setShowContactActions] = useState(false)
+  const [showFavoriteContact, setShowFavoriteContact] = useState(false)
+  const [showOnlineUsers, setShowOnlineUsers] = useState(false)
+  const [showBlockedContact, setShowBlockedContact] = useState(false)
+  const [selectedContact, setSelectedContact] = useState('anon64')
+  const [replyingTo, setReplyingTo] = useState(null)
+  const [toast, setToast] = useState({ show: false, message: '', type: 'info' })
+  const [isTyping, setIsTyping] = useState(false)
+
+  const showToast = (message, type = 'success') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000);
+  }
+
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      const newMessage = {
+        id: messages.length + 1,
+        text: message.trim(),
+        time: new Date().toLocaleTimeString(),
+        sender: 'me',
+        status: 'sending',
+        replyTo: replyingTo
+      }
+      setMessages(prev => [...prev, newMessage])
+      setMessage('')
+      setReplyingTo(null)
+      
+      // Simulate message states
+      setTimeout(() => {
+        setMessages(prev => 
+          prev.map(msg => 
+            msg.id === newMessage.id ? { ...msg, status: 'sent' } : msg
+          )
+        )
+      }, 500)
+
+      setTimeout(() => {
+        setMessages(prev => 
+          prev.map(msg => 
+            msg.id === newMessage.id ? { ...msg, status: 'delivered' } : msg
+          )
+        )
+      }, 1000)
+
+      // Simulate typing indicator
+      setIsTyping(true)
+      setTimeout(() => setIsTyping(false), 2000)
+
+      // Simulate reply
+      setTimeout(() => {
+        const reply = {
+          id: messages.length + 2,
+          text: generateRandomReply(),
+          time: new Date().toLocaleTimeString(),
+          sender: selectedContact,
+          status: 'sent'
+        }
+        setMessages(prev => [...prev, reply])
+
+        // Mark previous message as read
+        setMessages(prev => 
+          prev.map(msg => 
+            msg.id === newMessage.id ? { ...msg, status: 'read' } : msg
+          )
+        )
+      }, 2500)
+    }
+  }
+
+  const handleMessageReply = (message) => {
+    setReplyingTo(message);
+    showToast('Respondiendo al mensaje');
+  }
+
+  const handleMessageDelete = (messageId) => {
+    setMessages(prev => prev.filter(msg => msg.id !== messageId));
+    showToast('Mensaje eliminado');
+  }
+
+  const handleAddAttachment = () => {
+    setShowContactActions(true)
+    showToast('Selecciona un archivo para compartir');
+  }
+
+  const handleClearMessages = () => {
+    setShowClearMessages(false)
+    setMessages([])
+    showToast('Todos los mensajes han sido eliminados');
+  }
+
+  const handleBlockContact = () => {
+    setShowContactActions(false)
+    setShowFavoriteContact(false)
+    setShowOnlineUsers(false)
+    setShowBlockedContact(true)
+    showToast(`${selectedContact} ha sido bloqueado`);
+  }
+
+  const handleUnblockContact = () => {
+    setShowBlockedContact(false)
+    showToast(`${selectedContact} ha sido desbloqueado`);
+  }
+
+  const handleFavoriteContact = () => {
+    showToast(`${selectedContact} marcado como favorito`);
+  }
+
+  return (
+    <>
+      {showClearMessages && (
+        <ClearMessages
+          onConfirm={handleClearMessages}
+          onCancel={() => setShowClearMessages(false)}
+        />
+      )}
+
+      {showContactActions && (
+        <ContactActions
+          onClose={() => setShowContactActions(false)}
+          onBlock={handleBlockContact}
+          onFavorite={() => setShowFavoriteContact(true)}
+          onShowOnline={() => setShowOnlineUsers(true)}
+        />
+      )}
+
+      {showFavoriteContact && (
+        <FavoriteContact
+          contact={selectedContact}
+          onConfirm={handleFavoriteContact}
+          onClose={() => setShowFavoriteContact(false)}
+        />
+      )}
+
+      {showOnlineUsers && (
+        <OnlineUsers
+          users={contacts}
+          onClose={() => setShowOnlineUsers(false)}
+        />
+      )}
+
+      {showBlockedContact && (
+        <BlockedContact
+          contact={selectedContact}
+          onUnblock={handleUnblockContact}
+          onClose={() => setShowBlockedContact(false)}
+        />
+      )}
+
+      <div className="chat-screen">
+        <div className="chat-header">
+          <div className="header-left">
+            <h1 className="chat-title">bitchat</h1>
+            <span className="user-name">/@anon9680</span>
+          </div>
+
+          <div className="header-right">
+            <button className="header-btn" onClick={onOpenChannels}>
+              <span className="mesh-label">#mesh</span>
+            </button>
+            <button className="header-btn" onClick={onOpenNetwork}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
+                      fill="var(--text-secondary)"/>
+              </svg>
+              <span className="peer-count">0</span>
+            </button>
+            <button className="header-btn menu-dots-btn" onClick={() => setShowContactActions(true)}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="6" r="2" fill="var(--text-secondary)"/>
+                <circle cx="12" cy="12" r="2" fill="var(--text-secondary)"/>
+                <circle cx="12" cy="18" r="2" fill="var(--text-secondary)"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div className="chat-messages">
+          {messages.map((msg) => (
+            <Message
+              key={msg.id}
+              message={msg}
+              onReply={handleMessageReply}
+              onDelete={handleMessageDelete}
+              showToast={showToast}
+            />
+          ))}
+          {isTyping && (
+            <div className="typing-indicator">
+              {selectedContact} está escribiendo...
+            </div>
+          )}
+        </div>
+
+        <div className="chat-input">
+          {replyingTo && (
+            <div className="reply-preview">
+              <div className="reply-preview-content">
+                <span className="reply-to">Respondiendo a {replyingTo.sender}</span>
+                <p className="reply-text">{replyingTo.text}</p>
+              </div>
+              <button className="cancel-reply" onClick={() => setReplyingTo(null)}>✕</button>
+            </div>
+          )}
+          <div className="input-container">
+            <button className="input-action-btn" onClick={handleAddAttachment}>
+              <span role="img" aria-label="add attachment">📎</span>
+            </button>
+            <input
+              type="text"
+              placeholder="Escribe un mensaje..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+              className="message-input"
+            />
+            <button className="send-button" onClick={handleSendMessage}>
+              <span role="img" aria-label="send">➤</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {toast.show && (
+        <Toast 
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast({ show: false, message: '', type: 'info' })}
+        />
+      )}
+    </>
+  )
+}
+
+export default ChatScreen

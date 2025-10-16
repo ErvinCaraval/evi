@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import './ClearMessages.css'
 
-const ClearMessages = ({ onConfirm, onCancel }) => {
+const ClearMessages = ({ onConfirm, onCancel, showToast }) => {
   const [inputValue, setInputValue] = useState('')
 
   const handleConfirm = () => {
+    if (showToast) showToast('Mensajes eliminados correctamente', 'success')
     onConfirm()
   }
 
@@ -19,7 +20,7 @@ const ClearMessages = ({ onConfirm, onCancel }) => {
           </svg>
           <h3 className="clear-dialog-title">Limpiar mensajes</h3>
           <p className="clear-dialog-text">
-            ¿Estás seguro que deseas eliminar todos los mensajes del chat? Esta acción no se puede deshacer.
+            ¿Deseas eliminar todo el historial de mensajes? Esta acción no se puede deshacer y los mensajes se perderán permanentemente.
           </p>
         </div>
 

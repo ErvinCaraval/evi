@@ -1,3 +1,49 @@
+:root {
+  /* Color scheme */
+  --primary-color: #00ff88;
+  --primary-dark: #00cc6e;
+  --primary-light: #66ffa6;
+  
+  /* Background colors */
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2d2d2d;
+  --surface-color: #2d2d2d;
+  --background-color: var(--bg-primary);
+  
+  /* Text colors */
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-secondary: rgba(255, 255, 255, 0.60);
+  
+  /* Accent colors */
+  --accent-primary: #00ff88;
+  --accent-secondary: #00ccff;
+  
+  /* Effects */
+  --ripple-color: rgba(255, 255, 255, 0.12);
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Animation */
+  --transition-fast: 0.15s;
+  --transition-normal: 0.25s;
+  --transition-slow: 0.35s;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.4);
+  
+  /* Border */
+  --border-color: rgba(255, 255, 255, 0.1);
+  --spacing-md: 16px;
+}
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -6,6 +52,8 @@
   padding: var(--spacing-md);
   position: relative;
   overflow: hidden;
+  background-color: var(--background-color);
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
 }
 
 .app::before {
@@ -17,9 +65,80 @@
   height: 200%;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(0, 255, 136, 0.03) 0%,
+    rgba(98, 0, 238, 0.03) 0%,
     transparent 50%
   );
   animation: pulse 8s ease-in-out infinite;
   pointer-events: none;
+}
+
+.android-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.android-button:active {
+  background-color: var(--primary-dark);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+
+.toast-notification {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #323232;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+.input-field {
+  background-color: var(--surface-color);
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  padding: 12px 8px;
+  font-size: 16px;
+  transition: border-bottom-color 0.2s;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.input-field:focus {
+  outline: none;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+@keyframes pulse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

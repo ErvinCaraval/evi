@@ -1,8 +1,9 @@
 import './BlockedContact.css'
 
-const BlockedContact = ({ contactName, onUnblock, onClose }) => {
+const BlockedContact = ({ contactName, onUnblock, onClose, showToast }) => {
   const handleUnblock = () => {
     onUnblock()
+    if (showToast) showToast(`Contacto ${contactName} desbloqueado correctamente`, 'success')
     onClose()
   }
 

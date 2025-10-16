@@ -1,6 +1,6 @@
 import './CommandsHelp.css'
 
-const CommandsHelp = ({ onClose }) => {
+const CommandsHelp = ({ onClose, showToast }) => {
   const commands = [
     {
       command: '/block',
@@ -60,15 +60,13 @@ const CommandsHelp = ({ onClose }) => {
 
   return (
     <div className="commands-help">
-      <div className="commands-overlay" onClick={onClose}></div>
+      <div className="commands-overlay" onClick={() => { if (showToast) showToast('Ayuda de comandos cerrada', 'info'); onClose(); }}></div>
 
       <div className="commands-panel">
         <div className="commands-header">
           <div className="slash-icon">/</div>
-          <button className="close-btn" onClick={onClose}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6l12 12" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/>
-            </svg>
+          <button className="close-btn" onClick={() => { if (showToast) showToast('Ayuda de comandos cerrada', 'info'); onClose(); }}>
+            Cerrar
           </button>
         </div>
 

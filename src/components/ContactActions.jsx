@@ -1,15 +1,18 @@
 import './ContactActions.css'
 
-const ContactActions = ({ contactName, onBlock, onClose }) => {
+const ContactActions = ({ contactName, onBlock, onClose, showToast }) => {
   const handleFavorite = () => {
+    if (showToast) showToast('Contacto añadido a favoritos ⭐', 'success')
     console.log('Marked as favorite')
   }
 
   const handleViewOnline = () => {
+    if (showToast) showToast('Cargando usuarios en línea...', 'info')
     console.log('View online users')
   }
 
   const handleClearChat = () => {
+    if (showToast) showToast('Historial de chat eliminado', 'success')
     console.log('Clear chat')
   }
 
