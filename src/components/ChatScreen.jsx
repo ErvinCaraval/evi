@@ -31,6 +31,7 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
   const [showPrivateMessage, setShowPrivateMessage] = useState(false)
   const [showQRIdentity, setShowQRIdentity] = useState(false)
   const [showCommandSuggestions, setShowCommandSuggestions] = useState(false)
+  const [isInputFocused, setIsInputFocused] = useState(false)
 
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
@@ -231,7 +232,7 @@ return (
             onClose={() => setShowCommandSuggestions(false)}
           />
         )}
-        <div className="input-wrapper">
+        <div className={`input-wrapper ${isInputFocused || message ? 'focused' : ''}`}>
           <button className="attach-btn" onClick={handleAddAttachment}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M12 5v14M5 12h14" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/>
@@ -244,6 +245,8 @@ return (
             placeholder="Type a message..."
             value={message}
             onChange={(e) => handleCommandInput(e.target.value)}
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setIsInputFocused(false)}
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 if (!showCommandSuggestions) {
