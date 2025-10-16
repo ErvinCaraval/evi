@@ -1,12 +1,7 @@
 import React from 'react';
 import './MessageContextMenu.css';
 
-const MessageContextMenu = ({ position, onClose, onCopy, onReply, onReact, onDelete, message }) => {
-  const menuStyle = {
-    top: position.y,
-    left: position.x,
-  };
-
+const MessageContextMenu = ({ onClose, onCopy, onReply, onReact, onDelete, message }) => {
   const handleAction = (action) => {
     action();
     onClose();
@@ -15,7 +10,7 @@ const MessageContextMenu = ({ position, onClose, onCopy, onReply, onReact, onDel
   return (
     <>
       <div className="context-menu-overlay" onClick={onClose} />
-      <div className="message-context-menu" style={menuStyle}>
+      <div className="message-context-menu">
         <button className="context-menu-item" onClick={() => handleAction(onReply)}>
           <span className="context-menu-icon">↩️</span>
           Responder

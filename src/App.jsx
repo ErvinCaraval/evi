@@ -42,32 +42,24 @@ function App() {
   return (
     <div className="app">
       <div className="smartphone-frame">
-        <div className="app-shell">
-          {currentStep > 0 && (
+        <div className="smartphone-content">
+          <div className="app-shell">
             <header className="app-header">
-              <button 
-                className="back-btn" 
-                onClick={handlePrev}
-                aria-label="Volver al paso anterior"
-              >
+              <button className="back-btn" onClick={handlePrev} disabled={currentStep === 0}>
                 ← Atrás
               </button>
-              <div className="step-indicator" role="progressbar" aria-valuenow={currentStep + 1} aria-valuemax={steps.length}>
-                Paso {currentStep + 1} de {steps.length}
-              </div>
+              <div className="step-indicator">Paso {currentStep + 1} / {steps.length}</div>
             </header>
-          )}
-          
-          <main className="app-main">
-            <CurrentComponent
-              onNext={handleNext}
-              onPrev={handlePrev}
-              onOpenCommands={() => setShowCommands(true)}
-              onOpenChannels={() => setShowChannels(true)}
-              onOpenNetwork={() => setShowNetwork(true)}
-            />
-          </main>
-
+            <main className="app-main">
+              <CurrentComponent
+                onNext={handleNext}
+                onPrev={handlePrev}
+                onOpenCommands={() => setShowCommands(true)}
+                onOpenChannels={() => setShowChannels(true)}
+                onOpenNetwork={() => setShowNetwork(true)}
+              />
+            </main>
+          </div>
           {showCommands && <CommandsHelp onClose={() => setShowCommands(false)} />}
           {showChannels && <LocationChannels onClose={() => setShowChannels(false)} />}
           {showNetwork && <NetworkPeople onClose={() => setShowNetwork(false)} />}

@@ -14,21 +14,11 @@ const Message = ({ message, onReply, onDelete, showToast }) => {
 
   const handleLongPress = (e) => {
     e.preventDefault();
-    const rect = e.currentTarget.getBoundingClientRect();
-    setContextMenuPosition({
-      x: e.clientX,
-      y: e.clientY
-    });
     setShowContextMenu(true);
   };
 
   const handleTouchStart = (e) => {
     longPressTimer.current = setTimeout(() => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      setContextMenuPosition({
-        x: rect.left,
-        y: rect.top
-      });
       setShowContextMenu(true);
     }, 500);
   };
