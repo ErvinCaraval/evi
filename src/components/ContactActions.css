@@ -66,6 +66,30 @@
 
 .action-item:active {
   background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.98);
+}
+
+.action-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.action-item::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 255, 127, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+}
+
+.action-item:active::after {
+  width: 300px;
+  height: 300px;
 }
 
 .action-icon {
@@ -78,6 +102,17 @@
   justify-content: center;
   color: var(--accent-primary);
   flex-shrink: 0;
+  transition: transform 0.3s ease, background 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.action-item:hover .action-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.action-item:active .action-icon {
+  transform: scale(0.95);
 }
 
 .action-icon.danger {
@@ -90,6 +125,8 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  position: relative;
+  z-index: 1;
 }
 
 .action-title {

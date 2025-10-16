@@ -45,15 +45,19 @@
 }
 
 .app {
-  min-height: 100vh;
+  width: 100%;
+  max-width: 414px;
+  height: 100vh;
+  max-height: 896px;
+  min-height: 640px;
+  margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-md);
+  flex-direction: column;
   position: relative;
   overflow: hidden;
   background-color: var(--background-color);
   font-family: 'Roboto', 'Segoe UI', sans-serif;
+  box-shadow: var(--shadow-lg);
 }
 
 .app::before {

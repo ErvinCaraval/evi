@@ -1,19 +1,25 @@
 import './ContactActions.css'
 
-const ContactActions = ({ contactName, onBlock, onClose, showToast }) => {
+const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline, onFavorite, onClearMessages }) => {
   const handleFavorite = () => {
-    if (showToast) showToast('Contacto añadido a favoritos ⭐', 'success')
-    console.log('Marked as favorite')
+    onClose()
+    if (onFavorite) {
+      onFavorite()
+    }
   }
 
   const handleViewOnline = () => {
-    if (showToast) showToast('Cargando usuarios en línea...', 'info')
-    console.log('View online users')
+    onClose()
+    if (onViewOnline) {
+      onViewOnline()
+    }
   }
 
   const handleClearChat = () => {
-    if (showToast) showToast('Historial de chat eliminado', 'success')
-    console.log('Clear chat')
+    onClose()
+    if (onClearMessages) {
+      onClearMessages()
+    }
   }
 
   return (

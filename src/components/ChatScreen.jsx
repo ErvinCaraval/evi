@@ -11,6 +11,8 @@ import HugAnimation from './HugAnimation'
 import PrivateMessage from './PrivateMessage'
 import QRIdentity from './QRIdentity'
 import CommandSuggestions from './CommandSuggestions'
+import SquareMenu from './SquareMenu'
+import DotsMenu from './DotsMenu'
 import { mockUsers, mockMessages, generateRandomReply } from '../utils/mockData'
 
 const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
@@ -32,6 +34,8 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
   const [showQRIdentity, setShowQRIdentity] = useState(false)
   const [showCommandSuggestions, setShowCommandSuggestions] = useState(false)
   const [isInputFocused, setIsInputFocused] = useState(false)
+  const [showSquareMenu, setShowSquareMenu] = useState(false)
+  const [showDotsMenu, setShowDotsMenu] = useState(false)
 
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
@@ -288,6 +292,18 @@ return (
         onBlock={handleBlockContact}
         onClose={() => setShowContactActions(false)}
         showToast={showToast}
+        onViewOnline={() => {
+          setShowContactActions(false)
+          setShowOnlineUsers(true)
+        }}
+        onFavorite={() => {
+          setShowContactActions(false)
+          setShowFavoriteContact(true)
+        }}
+        onClearMessages={() => {
+          setShowContactActions(false)
+          setShowClearMessages(true)
+        }}
       />
     )}
 
@@ -341,6 +357,14 @@ return (
           handleBlockContact()
           setShowFloatingMenu(false)
         }}
+        onSquareMenu={() => {
+          setShowFloatingMenu(false)
+          setShowSquareMenu(true)
+        }}
+        onDotsMenu={() => {
+          setShowFloatingMenu(false)
+          setShowDotsMenu(true)
+        }}
       />
     )}
 
@@ -361,6 +385,14 @@ return (
 
     {showQRIdentity && (
       <QRIdentity onClose={() => setShowQRIdentity(false)} />
+    )}
+
+    {showSquareMenu && (
+      <SquareMenu onClose={() => setShowSquareMenu(false)} />
+    )}
+
+    {showDotsMenu && (
+      <DotsMenu onClose={() => setShowDotsMenu(false)} />
     )}
     </>
   )
