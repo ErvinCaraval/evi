@@ -7,8 +7,6 @@
   justify-content: center;
   z-index: 1100;
   animation: fadeIn 0.2s ease;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
 }
 
 .dots-menu-panel {
@@ -18,8 +16,7 @@
   max-width: 500px;
   animation: slideUpPanel 0.3s cubic-bezier(0.32, 0.72, 0, 1);
   padding-bottom: env(safe-area-inset-bottom);
-  max-height: 90vh;
-  max-height: calc(var(--vh, 1vh) * 90);
+  max-height: 75vh;
   display: flex;
   flex-direction: column;
 }
@@ -241,64 +238,5 @@
   }
   to {
     opacity: 1;
-  }
-}
-
-/* Mobile responsiveness */
-@media (max-width: 480px) {
-  .dots-menu-overlay {
-    align-items: stretch;
-    padding: 0;
-  }
-
-  .dots-menu-panel {
-    max-height: 100vh;
-    max-height: calc(var(--vh, 1vh) * 100);
-    border-radius: 0;
-    height: 100vh;
-    height: calc(var(--vh, 1vh) * 100);
-  }
-
-  .dots-menu-header {
-    padding: 20px 16px 12px;
-    flex-shrink: 0;
-  }
-
-  .dots-icon-large {
-    width: 56px;
-    height: 56px;
-  }
-
-  .dots-menu-title {
-    font-size: 16px;
-  }
-
-  .dots-menu-content {
-    flex: 1;
-    min-height: 0;
-    padding: 4px 0;
-  }
-
-  .dots-option-item {
-    padding: 14px 16px;
-  }
-
-  .dots-option-icon {
-    width: 40px;
-    height: 40px;
-  }
-
-  .dots-option-title {
-    font-size: 15px;
-  }
-
-  .dots-option-subtitle {
-    font-size: 12px;
-  }
-
-  .dots-menu-close {
-    padding: 14px;
-    font-size: 15px;
-    flex-shrink: 0;
   }
 }

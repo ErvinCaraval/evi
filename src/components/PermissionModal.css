@@ -11,8 +11,6 @@
   z-index: 1000;
   opacity: 0;
   transition: opacity var(--transition-normal);
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
 }
 
 .permission-modal.visible {
@@ -372,13 +370,8 @@
 }
 
 @media (max-width: 640px) {
-  .permission-modal {
-    padding: var(--spacing-sm);
-  }
-
   .permission-card {
     padding: var(--spacing-md);
-    max-width: none;
   }
 
   .location-options {
@@ -387,99 +380,5 @@
 
   .permission-title {
     font-size: 20px;
-  }
-
-  .permission-description {
-    font-size: 14px;
-  }
-
-  .info-item h4 {
-    font-size: 14px;
-  }
-
-  .info-item p {
-    font-size: 13px;
-  }
-
-  .benefit-item {
-    font-size: 13px;
-    padding: var(--spacing-xs);
-  }
-}
-
-@media (max-width: 480px) {
-  .permission-modal {
-    padding: 0;
-    align-items: stretch;
-    justify-content: stretch;
-  }
-
-  .permission-card {
-    padding: var(--spacing-md);
-    border-radius: 0;
-    max-height: 100vh;
-    height: 100vh;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: none;
-    width: 100%;
-  }
-
-  .permission-icon {
-    width: 56px;
-    height: 56px;
-  }
-
-  .permission-title {
-    font-size: 18px;
-  }
-
-  .permission-description {
-    font-size: 13px;
-  }
-
-  .location-visual {
-    width: 100px;
-    height: 100px;
-  }
-
-  .location-option-content h3 {
-    font-size: 15px;
-  }
-
-  .location-option-content p {
-    font-size: 12px;
-  }
-
-  .permission-btn {
-    padding: 14px var(--spacing-sm);
-    font-size: 15px;
-  }
-
-  .permission-note {
-    font-size: 12px;
-  }
-
-  .notification-illustration {
-    width: 160px;
-    height: 120px;
-  }
-
-  .bluetooth-info-card {
-    padding: var(--spacing-sm);
-  }
-
-  .info-item h4 {
-    font-size: 13px;
-  }
-
-  .info-item p {
-    font-size: 12px;
-  }
-
-  .benefit-item {
-    font-size: 12px;
   }
 }

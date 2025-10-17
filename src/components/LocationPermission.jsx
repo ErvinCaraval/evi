@@ -50,7 +50,7 @@ const LocationPermission = ({ onNext, showToast }) => {
           </div>
         </div>
 
-        <h2 className="permission-title">¿Compartir tu ubicación?</h2>
+        <h2 className="permission-title">Permitir acceso a ubicación</h2>
 
         <div className="location-options">
           <button
@@ -106,7 +106,7 @@ const LocationPermission = ({ onNext, showToast }) => {
             </div>
             <div className="location-option-content">
               <h3>Precisa</h3>
-              <p>Encuentra personas muy cerca de ti</p>
+              <p>Encuentra usuarios muy cercanos</p>
             </div>
           </button>
 
@@ -178,7 +178,7 @@ const LocationPermission = ({ onNext, showToast }) => {
             </div>
             <div className="location-option-content">
               <h3>Aproximada</h3>
-              <p>Encuentra personas en tu zona</p>
+              <p>Encuentra usuarios en el área general</p>
             </div>
           </button>
         </div>
@@ -213,7 +213,7 @@ const LocationPermission = ({ onNext, showToast }) => {
               fill="none"
             />
           </svg>
-          No guardamos tu ubicación. Solo la usamos para encontrar dispositivos cercanos.
+          Tu ubicación no es rastreada ni almacenada. Solo se usa para encontrar dispositivos Bluetooth cercanos.
         </p>
       </div>
     </div>

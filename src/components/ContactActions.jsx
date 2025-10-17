@@ -40,7 +40,7 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
             </div>
             <div className="action-content">
               <span className="action-title">Ver usuarios en línea</span>
-              <span className="action-subtitle">Ver quién está disponible</span>
+              <span className="action-subtitle">0 usuarios conectados</span>
             </div>
           </button>
 
@@ -52,7 +52,7 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
               </svg>
             </div>
             <div className="action-content">
-              <span className="action-title">Añadir a favoritos</span>
+              <span className="action-title">Marcar como favorito</span>
               <span className="action-subtitle">Acceso rápido a este contacto</span>
             </div>
           </button>
@@ -65,7 +65,7 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
               </svg>
             </div>
             <div className="action-content">
-              <span className="action-title">Borrar mensajes</span>
+              <span className="action-title">Limpiar mensajes</span>
               <span className="action-subtitle">Eliminar historial del chat</span>
             </div>
           </button>
@@ -81,7 +81,7 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
             </div>
             <div className="action-content">
               <span className="action-title">Bloquear contacto</span>
-              <span className="action-subtitle">No recibirás más mensajes de esta persona</span>
+              <span className="action-subtitle">Ya no podrás recibir mensajes</span>
             </div>
           </button>
         </div>

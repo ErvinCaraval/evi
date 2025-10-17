@@ -45,26 +45,10 @@ function App() {
         <div className="smartphone-content">
           <div className="app-shell">
             <header className="app-header">
-              <button 
-                className="back-btn" 
-                onClick={handlePrev} 
-                disabled={currentStep === 0}
-                aria-label="Volver al paso anterior"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span>Atrás</span>
+              <button className="back-btn" onClick={handlePrev} disabled={currentStep === 0}>
+                ← Atrás
               </button>
-              <div className="step-indicator">
-                <span className="step-text">Paso {currentStep + 1} de {steps.length}</span>
-                <div className="progress-bar">
-                  <div 
-                    className="progress-fill" 
-                    style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-                  />
-                </div>
-              </div>
+              <div className="step-indicator">Paso {currentStep + 1} / {steps.length}</div>
             </header>
             <main className="app-main">
               <CurrentComponent
