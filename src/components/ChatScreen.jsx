@@ -12,6 +12,7 @@ import QRIdentity from './QRIdentity'
 import CommandSuggestions from './CommandSuggestions'
 import SquareMenu from './SquareMenu'
 import DotsMenu from './DotsMenu'
+import FloatingHint from './FloatingHint'
 import { mockUsers, mockMessages, generateRandomReply } from '../utils/mockData'
 
 const ChatScreen = ({ onOpenChannels, onOpenNetwork, showToast }) => {
@@ -33,14 +34,27 @@ const ChatScreen = ({ onOpenChannels, onOpenNetwork, showToast }) => {
   const [isInputFocused, setIsInputFocused] = useState(false)
   const [showSquareMenu, setShowSquareMenu] = useState(false)
   const [showDotsMenu, setShowDotsMenu] = useState(false)
+  const [showCommandHint, setShowCommandHint] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      showToast('Escribe / para ver los comandos', 'info');
-    }, 2000);
+    const hasSeenHint = localStorage.getItem('hasSeenCommandHint');
 
-    return () => clearTimeout(timer);
-  }, [showToast]);
+    if (!hasSeenHint) {
+      const showTimer = setTimeout(() => {
+        setShowCommandHint(true);
+      }, 2500);
+
+      const hideTimer = setTimeout(() => {
+        setShowCommandHint(false);
+        localStorage.setItem('hasSeenCommandHint', 'true');
+      }, 8500);
+
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
+    }
+  }, []);
 
   const handleSendMessage = () => {
     if (!message.trim()) return;
@@ -154,7 +168,7 @@ const ChatScreen = ({ onOpenChannels, onOpenNetwork, showToast }) => {
           break;
         }
         default:
-          showToast(`Comando "${command}" no reconocido.`, 'error');
+          showToast(`Comando \"${command}\" no reconocido.`, 'error');
           break;
       }
       setMessage('');
@@ -250,15 +264,19 @@ return (
         </div>
 
         <div className="header-right">
-          <button className="header-btn" onClick={onOpenChannels}>
+          <button className="header-btn" onClick={onOpenChannels} title="Cambiar de canal">
             <span className="mesh-label">#mesh</span>
           </button>
-          <button className="header-btn" onClick={onOpenNetwork}>
+          <button className="header-btn" onClick={onOpenNetwork} title="Ver usuarios conectados">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="var(--text-secondary)"/></svg>
             <span className="peer-count">0</span>
           </button>
-          <button className="header-btn" onClick={() => setShowQRIdentity(true)}><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/><rect x="14" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/><rect x="3" y="14" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/><rect x="14" y="14" width="3" height="3" fill="var(--text-secondary)"/><rect x="18" y="14" width="3" height="3" fill="var(--text-secondary)"/><rect x="14" y="18" width="3" height="3" fill="var(--text-secondary)"/></svg></button>
-          <button className="header-btn menu-dots-btn" onClick={() => setShowFloatingMenu(true)}><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2" fill="var(--text-secondary)"/><circle cx="12" cy="12" r="2" fill="var(--text-secondary)"/><circle cx="12" cy="18" r="2" fill="var(--text-secondary)"/></svg></button>
+          <button className="header-btn" onClick={() => setShowQRIdentity(true)} title="Mostrar mi código QR">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/><rect x="14" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/><rect x="3" y="14" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2" fill="none"/><rect x="14" y="14" width="3" height="3" fill="var(--text-secondary)"/><rect x="18" y="14" width="3" height="3" fill="var(--text-secondary)"/><rect x="14" y="18" width="3" height="3" fill="var(--text-secondary)"/></svg>
+          </button>
+          <button className="header-btn menu-dots-btn" onClick={() => setShowFloatingMenu(true)} title="Ver más opciones">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2" fill="var(--text-secondary)"/><circle cx="12" cy="12" r="2" fill="var(--text-secondary)"/><circle cx="12" cy="18" r="2" fill="var(--text-secondary)"/></svg>
+          </button>
         </div>
       </div>
 
@@ -273,6 +291,7 @@ return (
 
 
       <div className="chat-input-container">
+        {showCommandHint && <FloatingHint text="Escribe / para descubrir comandos" />}
         {showCommandSuggestions && (
           <CommandSuggestions
             input={message}
@@ -281,7 +300,9 @@ return (
           />
         )}
         <div className={`input-wrapper ${isInputFocused || message ? 'focused' : ''}`}>
-          <button className="attach-btn" onClick={handleAddAttachment}><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/></svg></button>
+          <button className="attach-btn" onClick={handleAddAttachment} title="Más acciones">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/></svg>
+          </button>
           <input
             type="text"
             className="message-input"
@@ -292,7 +313,9 @@ return (
             onBlur={() => setIsInputFocused(false)}
             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
           />
-          <button className="send-btn" onClick={handleSendMessage}><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z" fill="var(--accent-primary)"/></svg></button>
+          <button className="send-btn" onClick={handleSendMessage} title="Enviar mensaje">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z" fill="var(--accent-primary)"/></svg>
+          </button>
         </div>
       </div>
     </div>
