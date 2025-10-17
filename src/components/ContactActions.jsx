@@ -70,8 +70,6 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
             </div>
           </button>
 
-          <div className="divider"></div>
-
           <button className="action-item danger" onClick={onBlock}>
             <div className="action-icon danger">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -86,9 +84,11 @@ const ContactActions = ({ contactName, onBlock, onClose, showToast, onViewOnline
           </button>
         </div>
 
-        <button className="sheet-cancel" onClick={onClose}>
-          Cancelar
-        </button>
+        <div className="sheet-footer">
+          <button className="sheet-cancel" onClick={onClose}>
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   )

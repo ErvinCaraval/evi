@@ -1,16 +1,8 @@
+/* Basic Reset & Root Variables */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-body {
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--bg-primary);
 }
 
 :root {
@@ -57,7 +49,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #fff;
+  background: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.5;
   overflow-x: hidden;
@@ -69,32 +61,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-}
-
-.smartphone-frame {
-  background: var(--bg-primary);
-  border-radius: 32px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  padding: 0;
-  width: 100%;
-  max-width: 480px;
-  min-height: 100vh;
-  height: 100%;
-  padding-bottom: var(--spacing-lg);
-  padding-top: var(--spacing-lg);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.smartphone-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
 }
 
 button {
@@ -110,6 +76,7 @@ input {
   outline: none;
 }
 
+/* General Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -155,20 +122,5 @@ input {
   to {
     transform: scale(1);
     opacity: 1;
-  }
-}
-
-@media (max-width: 600px) {
-  .smartphone-frame {
-    height: 100vh;
-    max-height: 100vh;
-    min-height: 100vh;
-    max-width: 100vw;
-    min-width: 0;
-    border-radius: 0;
-    margin: 0;
-    box-shadow: none;
-    padding-bottom: 0;
-    padding-top: 0;
   }
 }

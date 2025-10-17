@@ -150,3 +150,52 @@
   color: var(--text-secondary);
   line-height: 1.5;
 }
+
+@media (max-width: 480px) {
+  .commands-panel {
+    max-height: 85vh;
+  }
+
+  .commands-header {
+    padding: 16px;
+  }
+
+  .slash-icon {
+    font-size: 28px;
+  }
+
+  .commands-content {
+    padding: 16px;
+  }
+
+  .terminal-window {
+    padding: 16px;
+  }
+
+  .command-row {
+    padding: 10px 0;
+    gap: 6px;
+  }
+
+  .command-syntax {
+    font-size: 14px;
+  }
+
+  .command-description {
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .command-icon {
+    font-size: 14px;
+  }
+
+  .tip-box {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .tip-box span {
+    font-size: 13px;
+  }
+}

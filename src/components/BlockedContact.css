@@ -108,3 +108,42 @@
     opacity: 1;
   }
 }
+
+@media (max-width: 480px) {
+  .blocked-contact-overlay {
+    padding: 16px;
+  }
+
+  .blocked-dialog-header {
+    padding: 24px 16px;
+    gap: 12px;
+  }
+
+  .blocked-icon-large {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 4px;
+  }
+
+  .blocked-dialog-title {
+    font-size: 18px;
+  }
+
+  .blocked-dialog-text {
+    font-size: 14px;
+  }
+
+  .blocked-dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  .blocked-dialog-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .blocked-dialog-btn.secondary {
+    border-right: none;
+    border-top: 1px solid var(--border-color);
+  }
+}

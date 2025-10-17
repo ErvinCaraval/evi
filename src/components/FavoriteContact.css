@@ -132,3 +132,42 @@
     opacity: 1;
   }
 }
+
+@media (max-width: 480px) {
+  .favorite-contact-overlay {
+    padding: 16px;
+  }
+
+  .favorite-dialog-header {
+    padding: 24px 16px;
+    gap: 12px;
+  }
+
+  .favorite-icon-large {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 4px;
+  }
+
+  .favorite-dialog-title {
+    font-size: 18px;
+  }
+
+  .favorite-dialog-text {
+    font-size: 14px;
+  }
+
+  .favorite-dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  .favorite-dialog-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .favorite-dialog-btn.secondary {
+    border-right: none;
+    border-top: 1px solid var(--border-color);
+  }
+}

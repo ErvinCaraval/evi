@@ -1,188 +1,113 @@
-import { useState, useEffect } from 'react'
-import './PermissionModal.css'
+import { useState, useEffect } from 'react';
+import './PermissionModal.css';
+
+// --- SVG Icons --- //
+const BellIcon = () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    </svg>
+);
+
+const ZapIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+);
+
+const ClockIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+);
+
+const ShieldIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+);
+
+const SettingsIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+);
 
 const NotificationPermission = ({ onNext, showToast }) => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setIsVisible(true), 100)
-  }, [])
+    setTimeout(() => setIsVisible(true), 100);
+  }, []);
 
-  const handleAllow = () => {
-    if (showToast) showToast('Notificaciones activadas', 'success')
-    setTimeout(() => {
-      onNext()
-    }, 300)
-  }
-
-  const handleDeny = () => {
-    if (showToast) showToast('Notificaciones desactivadas', 'info')
-    setTimeout(() => {
-      onNext()
-    }, 300)
-  }
+  const handleAction = (action) => {
+    if (showToast) {
+      const message = action === 'allow' ? 'Notificaciones activadas' : 'Notificaciones desactivadas';
+      showToast(message, action === 'allow' ? 'success' : 'info');
+    }
+    setTimeout(() => onNext(), 300);
+  };
 
   return (
     <div className={`permission-modal ${isVisible ? 'visible' : ''}`}>
-      <div className="permission-backdrop" onClick={handleDeny} />
+      <div className="permission-backdrop" onClick={() => handleAction('deny')} />
 
       <div className="permission-card">
         <div className="permission-icon-wrapper">
           <div className="permission-icon notification-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"
-                fill="var(--accent-primary)"
-              />
-            </svg>
+            <BellIcon />
           </div>
         </div>
 
-        <h2 className="permission-title">
-          Mantente al tanto de tus mensajes
-        </h2>
-
+        <h2 className="permission-title">Mantente al tanto de tus mensajes</h2>
         <p className="permission-description">
-          Recibe alertas instantáneas cuando lleguen nuevos mensajes, incluso si la app está en segundo plano.
+          Recibe alertas cuando lleguen mensajes nuevos, incluso si la app está en segundo plano.
         </p>
 
         <div className="notification-illustration">
-          <svg viewBox="0 0 200 140" width="200" height="140">
-            <defs>
-              <linearGradient id="bellGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="var(--accent-primary)" stopOpacity="0.4" />
-              </linearGradient>
-            </defs>
-
-            <g className="notification-waves">
-              <line
-                x1="50"
-                y1="40"
-                x2="20"
-                y2="20"
-                stroke="var(--accent-primary)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                opacity="0.4"
-                style={{ animationDelay: '0s' }}
-              />
-              <line
-                x1="50"
-                y1="50"
-                x2="15"
-                y2="40"
-                stroke="var(--accent-primary)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                opacity="0.3"
-                style={{ animationDelay: '0.3s' }}
-              />
-              <line
-                x1="150"
-                y1="40"
-                x2="180"
-                y2="20"
-                stroke="var(--accent-primary)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                opacity="0.4"
-                style={{ animationDelay: '0.15s' }}
-              />
-              <line
-                x1="150"
-                y1="50"
-                x2="185"
-                y2="40"
-                stroke="var(--accent-primary)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                opacity="0.3"
-                style={{ animationDelay: '0.45s' }}
-              />
-            </g>
-
-            <g className="notification-bell" transform="translate(100, 50)">
-              <path
-                d="M-15 5 Q-15 -15, 0 -20 Q15 -15, 15 5 L15 10 L-15 10 Z"
-                fill="url(#bellGradient)"
-                stroke="var(--accent-primary)"
-                strokeWidth="2"
-              />
-              <circle cx="0" cy="15" r="4" fill="var(--accent-primary)" />
-              <rect x="-2" y="-25" width="4" height="5" rx="2" fill="var(--accent-primary)" />
-            </g>
-
-            <g transform="translate(100, 95)">
-              <rect
-                x="-60"
-                y="0"
-                width="120"
-                height="40"
-                rx="8"
-                fill="var(--bg-card)"
-                stroke="var(--accent-primary)"
-                strokeWidth="1.5"
-                opacity="0.9"
-              />
-              <circle cx="-40" cy="20" r="8" fill="var(--accent-primary)" opacity="0.6" />
-              <rect x="-25" y="12" width="60" height="4" rx="2" fill="var(--text-secondary)" opacity="0.4" />
-              <rect x="-25" y="22" width="40" height="3" rx="1.5" fill="var(--text-muted)" opacity="0.3" />
-            </g>
-          </svg>
+            <svg viewBox="0 0 200 120">
+                 <g transform="translate(100, 60)" className="notification-bell" style={{animation: 'bellRing 2.5s ease-in-out infinite', transformOrigin: 'top center'}}>
+                    <path d="M-18 8 C -18 -20, 0 -25, 18 -20 C 18 8, 18 12, -18 12 Z" fill="#ffc864" stroke="#fff" strokeWidth="1.5" opacity="0.9"></path>
+                    <circle cx="0" cy="15" r="5" fill="#fff" opacity="0.8"></circle>
+                    <path d="M -2 -28 L 2 -28 L 2 -23 L -2 -23 Z" fill="#fff" rx="2"></path>
+                </g>
+            </svg>
         </div>
 
         <div className="notification-benefits">
           <div className="benefit-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"
-                fill="var(--accent-primary)"
-              />
-            </svg>
-            <span>No te pierdas ningún mensaje importante</span>
+            <div className="benefit-icon" style={{ color: '#ffc864' }}><ZapIcon /></div>
+            <div className="benefit-item-content">
+              <h4>No te pierdas ningún mensaje</h4>
+              <p>Recibe notificaciones al instante.</p>
+            </div>
           </div>
-
           <div className="benefit-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" stroke="var(--accent-primary)" strokeWidth="2" fill="none" />
-              <path d="M12 6v6l4 2" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-            <span>Responde rápidamente a tus contactos</span>
+            <div className="benefit-icon" style={{ color: '#ffc864' }}><ClockIcon /></div>
+            <div className="benefit-item-content">
+              <h4>Responde rápidamente</h4>
+              <p>Chatea en tiempo real con tus contactos.</p>
+            </div>
           </div>
-
-          <div className="benefit-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z"
-                stroke="var(--accent-primary)"
-                strokeWidth="2"
-                fill="none"
-              />
-            </svg>
-            <span>Notificaciones privadas y seguras</span>
+           <div className="benefit-item">
+            <div className="benefit-icon" style={{ color: '#ffc864' }}><ShieldIcon /></div>
+            <div className="benefit-item-content">
+              <h4>Privadas y seguras</h4>
+              <p>El contenido del mensaje no se muestra.</p>
+            </div>
           </div>
         </div>
 
         <div className="permission-actions">
-          <button className="permission-btn primary" onClick={handleAllow}>
+          <button className="permission-btn primary" onClick={() => handleAction('allow')}>
             Permitir notificaciones
           </button>
-          <button className="permission-btn tertiary" onClick={handleDeny}>
-            Omitir
+          <button className="permission-btn tertiary" onClick={() => handleAction('deny')}>
+            Omitir por ahora
           </button>
         </div>
 
-        <p className="permission-note">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-            <path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-          Puedes personalizar las notificaciones en ajustes en cualquier momento
-        </p>
+        <div className="permission-note">
+          <SettingsIcon />
+          <span>Puedes personalizar las notificaciones en ajustes en cualquier momento.</span>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NotificationPermission
+export default NotificationPermission;

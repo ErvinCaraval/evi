@@ -11,7 +11,7 @@ const OnlineUsers = ({ users, onUserSelect, onFavorite, onBlock, onClose }) => {
     <div className="online-users-overlay" onClick={onClose}>
       <div className="online-users-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="online-sheet-header">
-          <div className="sheet-handle"></div>
+          <div className="drag-handle"></div>
           <h3 className="online-sheet-title">Usuarios en línea</h3>
           <span className="online-count">{defaultUsers.length} conectados</span>
         </div>
@@ -40,9 +40,11 @@ const OnlineUsers = ({ users, onUserSelect, onFavorite, onBlock, onClose }) => {
           ))}
         </div>
 
-        <button className="online-sheet-cancel" onClick={onClose}>
-          Cerrar
-        </button>
+        <div className="online-sheet-footer">
+            <button className="online-sheet-cancel" onClick={onClose}>
+                Cerrar
+            </button>
+        </div>
       </div>
     </div>
   )

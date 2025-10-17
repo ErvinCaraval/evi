@@ -13,7 +13,6 @@
   background: var(--bg-secondary);
   border-radius: 20px 20px 0 0;
   width: 100%;
-  max-width: 500px;
   animation: slideUpPanel 0.3s cubic-bezier(0.32, 0.72, 0, 1);
   padding-bottom: env(safe-area-inset-bottom);
   max-height: 75vh;
@@ -238,5 +237,48 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .dots-menu-header {
+    padding: 20px 16px 12px;
+    gap: 8px;
+  }
+
+  .dots-icon-large {
+    width: 56px;
+    height: 56px;
+  }
+
+  .dots-menu-title {
+    font-size: 17px;
+  }
+
+  .dots-option-item {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .dots-option-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dots-option-title {
+    font-size: 15px;
+  }
+
+  .dots-option-subtitle {
+    font-size: 12px;
+  }
+
+  .dots-divider {
+    margin: 6px 16px;
+  }
+
+  .dots-menu-close {
+    padding: 14px;
+    font-size: 15px;
   }
 }

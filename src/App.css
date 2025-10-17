@@ -41,108 +41,117 @@
   
   /* Border */
   --border-color: rgba(255, 255, 255, 0.1);
-  --spacing-md: 16px;
 }
 
 .app {
-  width: 100%;
-  max-width: 414px;
-  height: 100vh;
-  max-height: 896px;
-  min-height: 640px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #222;
+}
+
+.smartphone-frame {
+  width: 375px;
+  height: 812px;
+  background-color: #111;
+  padding: 15px;
+  border-radius: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 3px rgba(255,255,255,0.1);
   display: flex;
   flex-direction: column;
-  position: relative;
+}
+
+.smartphone-content {
+  flex: 1;
+  background-color: var(--bg-primary);
+  border-radius: 25px;
   overflow: hidden;
-  background-color: var(--background-color);
-  font-family: 'Roboto', 'Segoe UI', sans-serif;
-  box-shadow: var(--shadow-lg);
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.app::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(98, 0, 238, 0.03) 0%,
-    transparent 50%
-  );
-  animation: pulse 8s ease-in-out infinite;
-  pointer-events: none;
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.android-button {
-  background-color: var(--primary-color);
-  color: white;
+.app-header {
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(30, 30, 30, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 100;
+}
+
+.back-btn {
+  background: none;
   border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s ease;
+  color: var(--accent-primary);
+  font-size: 16px;
   cursor: pointer;
 }
 
-.android-button:active {
-  background-color: var(--primary-dark);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  transform: translateY(1px);
+.back-btn:disabled {
+  color: var(--text-secondary);
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.toast-notification {
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #323232;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 4px;
+.step-indicator {
+  color: var(--text-secondary);
   font-size: 14px;
-  z-index: 1000;
-  animation: slideUp 0.3s ease-out;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
 
-@keyframes slideUp {
-  from {
-    transform: translate(-50%, 100%);
-    opacity: 0;
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+  display: flex;
+  justify-content: center;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.app-main::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .app {
+    background: var(--bg-primary);
+    align-items: stretch;
+    justify-content: stretch;
   }
-  to {
-    transform: translate(-50%, 0);
-    opacity: 1;
+  
+  .smartphone-frame {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 0;
+    background-color: var(--bg-primary);
+    box-shadow: none;
   }
-}
 
-.input-field {
-  background-color: var(--surface-color);
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
-  padding: 12px 8px;
-  font-size: 16px;
-  transition: border-bottom-color 0.2s;
-  width: 100%;
-  margin-bottom: 16px;
-}
-
-.input-field:focus {
-  outline: none;
-  border-bottom: 2px solid var(--primary-color);
-}
-
-@keyframes pulse {
-  0% {
-    transform: rotate(0deg);
+  .smartphone-content {
+    border-radius: 0;
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
   }
-  100% {
-    transform: rotate(360deg);
+  
+  .app-header {
+    padding: 12px 16px;
+    background: rgba(18, 18, 18, 0.8);
+  }
+  
+  .app-main {
+    padding: var(--spacing-md);
   }
 }

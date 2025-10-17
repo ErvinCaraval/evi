@@ -2,56 +2,70 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.2s ease;
+  padding: 16px;
+  animation: fadeIn 0.3s ease;
 }
 
 .contact-actions-sheet {
   background: var(--bg-secondary);
-  border-radius: 20px 20px 0 0;
+  border-radius: 20px;
   width: 100%;
-  max-width: 500px;
-  animation: slideUpSheet 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-  padding-bottom: env(safe-area-inset-bottom);
+  max-width: 380px;
+  animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
 .sheet-header {
   padding: 12px 20px 16px;
   border-bottom: 1px solid var(--border-color);
+  position: relative;
 }
 
 .sheet-handle {
-  width: 36px;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
   height: 4px;
-  background: var(--text-muted);
+  background: var(--border-color);
   border-radius: 2px;
-  margin: 0 auto 12px;
-  opacity: 0.5;
 }
 
 .sheet-title {
-  font-size: 16px;
+  padding-top: 12px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
   text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .sheet-content {
-  padding: 8px 0;
-  max-height: 60vh;
+  padding: 8px;
+  max-height: 70vh;
   overflow-y: auto;
 }
 
 .action-item {
-  width: 100%;
+  width: auto;
+  margin: 0 8px;
   background: transparent;
   border: none;
-  padding: 16px 20px;
+  border-radius: 12px;
+  padding: 12px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -64,59 +78,20 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
-.action-item:active {
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(0.98);
-}
-
-.action-item {
-  position: relative;
-  overflow: hidden;
-}
-
-.action-item::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(0, 255, 127, 0.2);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.5s ease, height 0.5s ease;
-}
-
-.action-item:active::after {
-  width: 300px;
-  height: 300px;
-}
-
 .action-icon {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(0, 255, 127, 0.15);
+  background: rgba(0, 255, 127, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--accent-primary);
   flex-shrink: 0;
-  transition: transform 0.3s ease, background 0.3s ease;
-  position: relative;
-  z-index: 1;
-}
-
-.action-item:hover .action-icon {
-  transform: scale(1.1) rotate(5deg);
-}
-
-.action-item:active .action-icon {
-  transform: scale(0.95);
 }
 
 .action-icon.danger {
-  background: rgba(239, 68, 68, 0.15);
+  background: rgba(239, 68, 68, 0.1);
   color: #EF4444;
 }
 
@@ -124,16 +99,13 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  position: relative;
-  z-index: 1;
+  gap: 2px;
 }
 
 .action-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .action-item.danger .action-title {
@@ -141,49 +113,33 @@
 }
 
 .action-subtitle {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.divider {
-  height: 1px;
-  background: var(--border-color);
-  margin: 8px 20px;
+.sheet-footer {
+  padding: 8px;
+  border-top: 1px solid var(--border-color);
 }
 
 .sheet-cancel {
   width: 100%;
-  background: var(--bg-primary);
+  background: transparent;
   border: none;
-  padding: 16px;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-primary);
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: opacity 0.2s ease;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  border-top: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  border-radius: 8px;
 }
 
 .sheet-cancel:hover {
-  opacity: 0.8;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 
-@keyframes slideUpSheet {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.action-item:active {
+  transform: scale(0.98);
 }
