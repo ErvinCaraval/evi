@@ -183,3 +183,134 @@
   color: var(--accent-primary);
   transform: translateY(-2px);
 }
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .battery-optimization {
+    padding: 20px;
+  }
+
+  .battery-content {
+    gap: 24px;
+  }
+
+  .battery-title {
+    font-size: 28px;
+  }
+
+  .battery-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .battery-status-card {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .status-title {
+    font-size: 18px;
+  }
+
+  .status-description,
+  .status-recommendation {
+    font-size: 14px;
+  }
+
+  .benefits-box {
+    padding: 16px;
+  }
+
+  .benefits-title {
+    font-size: 15px;
+  }
+
+  .benefits-list li {
+    font-size: 13px;
+  }
+
+  .disable-btn {
+    padding: 16px 20px;
+    font-size: 15px;
+  }
+
+  .check-btn,
+  .skip-btn {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .battery-optimization {
+    padding: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: auto;
+    padding-top: 20px;
+  }
+
+  .battery-content {
+    gap: 20px;
+  }
+
+  .battery-title {
+    font-size: 24px;
+  }
+
+  .battery-icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .battery-status-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .status-title {
+    font-size: 16px;
+  }
+
+  .status-description,
+  .status-recommendation {
+    font-size: 13px;
+  }
+
+  .benefits-box {
+    padding: 12px;
+  }
+
+  .benefits-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .benefits-list {
+    gap: 8px;
+  }
+
+  .benefits-list li {
+    font-size: 12px;
+  }
+
+  .battery-actions {
+    gap: 12px;
+  }
+
+  .disable-btn {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+
+  .secondary-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .check-btn,
+  .skip-btn {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+}

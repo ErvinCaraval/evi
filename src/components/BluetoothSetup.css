@@ -282,8 +282,16 @@
 }
 
 @media (max-width: 640px) {
+  .setup-content {
+    gap: var(--spacing-md);
+  }
+
   .setup-title {
     font-size: 36px;
+  }
+
+  .setup-subtitle {
+    font-size: 14px;
   }
 
   .network-visualization-large {
@@ -293,5 +301,100 @@
 
   .bluetooth-status-card {
     padding: var(--spacing-md);
+  }
+
+  .bluetooth-icon-large {
+    width: 64px;
+    height: 64px;
+  }
+
+  .status-content h2 {
+    font-size: 20px;
+  }
+
+  .status-content p {
+    font-size: 14px;
+  }
+
+  .bluetooth-features li {
+    font-size: 14px;
+    padding: var(--spacing-xs);
+  }
+
+  .enable-btn {
+    padding: 16px var(--spacing-md);
+    font-size: 16px;
+  }
+
+  .skip-btn.secondary {
+    padding: 14px var(--spacing-md);
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .setup-content {
+    gap: var(--spacing-sm);
+  }
+
+  .setup-title {
+    font-size: 32px;
+  }
+
+  .setup-subtitle {
+    font-size: 13px;
+  }
+
+  .network-visualization-large {
+    width: 200px;
+    height: 200px;
+  }
+
+  .bluetooth-status-card {
+    padding: var(--spacing-sm);
+  }
+
+  .bluetooth-icon-large {
+    width: 56px;
+    height: 56px;
+  }
+
+  .status-content h2 {
+    font-size: 18px;
+  }
+
+  .status-content p {
+    font-size: 13px;
+  }
+
+  .bluetooth-features {
+    gap: var(--spacing-xs);
+  }
+
+  .bluetooth-features li {
+    font-size: 13px;
+    padding: var(--spacing-xs);
+  }
+
+  .enable-btn {
+    padding: 14px var(--spacing-sm);
+    font-size: 15px;
+  }
+
+  .skip-btn.secondary {
+    padding: 12px var(--spacing-sm);
+    font-size: 14px;
+  }
+
+  .success-message {
+    padding: var(--spacing-sm);
+  }
+
+  .success-message p {
+    font-size: 15px;
+  }
+
+  .setup-note {
+    font-size: 12px;
   }
 }

@@ -18,9 +18,9 @@ const ClearMessages = ({ onConfirm, onCancel, showToast }) => {
                   stroke="#EF4444" strokeWidth="2" fill="none"/>
             <path d="M10 11v6M14 11v6" stroke="#EF4444" strokeWidth="2" strokeLinecap="round"/>
           </svg>
-          <h3 className="clear-dialog-title">Limpiar mensajes</h3>
+          <h3 className="clear-dialog-title">¿Borrar todos los mensajes?</h3>
           <p className="clear-dialog-text">
-            ¿Deseas eliminar todo el historial de mensajes? Esta acción no se puede deshacer y los mensajes se perderán permanentemente.
+            Se eliminará todo el historial de este chat. Esta acción no se puede deshacer.
           </p>
         </div>
 
@@ -29,7 +29,7 @@ const ClearMessages = ({ onConfirm, onCancel, showToast }) => {
             Cancelar
           </button>
           <button className="clear-dialog-btn danger" onClick={handleConfirm}>
-            Limpiar
+            Borrar todo
           </button>
         </div>
       </div>

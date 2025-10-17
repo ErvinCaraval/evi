@@ -49,6 +49,10 @@ body {
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Focus and interaction states */
+  --focus-ring: 0 0 0 3px rgba(0, 255, 136, 0.3);
+  --focus-ring-offset: 0 0 0 2px var(--bg-primary), 0 0 0 5px rgba(0, 255, 136, 0.3);
 }
 
 body {
@@ -103,10 +107,27 @@ button {
   border: none;
   outline: none;
   background: none;
+  transition: all var(--transition-fast);
+}
+
+button:focus-visible {
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 input {
   font-family: inherit;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+input:focus-visible {
+  box-shadow: var(--focus-ring);
   outline: none;
 }
 
@@ -170,5 +191,58 @@ input {
     box-shadow: none;
     padding-bottom: 0;
     padding-top: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .smartphone-frame {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .smartphone-content {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Improve touch targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  input {
+    min-height: 44px;
+  }
+
+  /* Better touch feedback */
+  button:active {
+    transform: scale(0.98);
+  }
+
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+/* Safe area handling for devices with notches */
+@supports (padding: max(0px)) {
+  .smartphone-frame {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .app-header {
+    padding-top: max(16px, env(safe-area-inset-top));
+  }
+
+  .chat-input-container {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
 }

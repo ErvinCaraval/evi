@@ -4,56 +4,56 @@ const CommandsHelp = ({ onClose, showToast }) => {
   const commands = [
     {
       command: '/block',
-      args: '[nickname]',
-      description: 'block or list blocked peers',
+      args: '[usuario]',
+      description: 'bloquear o ver usuarios bloqueados',
       icon: '🚫'
     },
     {
       command: '/channels',
       args: '',
-      description: 'show all discovered channels',
+      description: 'ver todos los canales disponibles',
       icon: '📡'
     },
     {
       command: '/clear',
       args: '',
-      description: 'clear chat messages',
+      description: 'borrar mensajes del chat',
       icon: '🗑️'
     },
     {
       command: '/hug',
-      args: '<nickname>',
-      description: 'send someone a warm hug',
+      args: '<usuario>',
+      description: 'enviar un abrazo virtual',
       icon: '🤗'
     },
     {
-      command: '/m, /join',
-      args: '<channel>',
-      description: 'join or create a channel',
+      command: '/join',
+      args: '<canal>',
+      description: 'unirse o crear un canal',
       icon: '➕'
     },
     {
-      command: '/m, /mg',
-      args: '<nickname> [message]',
-      description: 'send private message',
+      command: '/msg',
+      args: '<usuario> [mensaje]',
+      description: 'enviar mensaje privado',
       icon: '💬'
     },
     {
       command: '/slap',
-      args: '<nickname>',
-      description: 'slap someone with a trout',
+      args: '<usuario>',
+      description: 'dar un golpecito divertido',
       icon: '🐟'
     },
     {
       command: '/unblock',
-      args: '<nickname>',
-      description: 'unblock a peer',
+      args: '<usuario>',
+      description: 'desbloquear usuario',
       icon: '✅'
     },
     {
-      command: '/w',
+      command: '/who',
       args: '',
-      description: "see who's online",
+      description: 'ver quién está en línea',
       icon: '👥'
     }
   ]
@@ -92,7 +92,7 @@ const CommandsHelp = ({ onClose, showToast }) => {
                 <circle cx="12" cy="12" r="10" stroke="var(--accent-primary)" strokeWidth="2"/>
                 <path d="M12 16v-4M12 8h.01" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              <span>Tip: Escribe / en el chat para ver los comandos disponibles</span>
+              <span>Consejo: Escribe / en el chat para ver comandos</span>
             </div>
           </div>
         </div>

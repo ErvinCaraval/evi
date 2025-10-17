@@ -56,14 +56,14 @@ const FloatingMenu = ({ contactName, position, onClose, onRemove, onViewOnline, 
             className={`action-button online ${clickedButton === 'online' ? 'clicked' : ''}`}
             onClick={() => handleAction(onViewOnline, 'online')}
           >
-            <span className="action-label">Usuarios Online (w)</span>
+            <span className="action-label">Ver quién está en línea</span>
           </button>
 
           <button
             className={`action-button favorite ${clickedButton === 'favorite' ? 'clicked' : ''}`}
             onClick={() => handleAction(onFavorite, 'favorite')}
           >
-            <span className="action-label">Favorito</span>
+            <span className="action-label">Añadir a favoritos</span>
           </button>
 
           <button

@@ -30,7 +30,7 @@ const BluetoothSetup = ({ onNext }) => {
       <div className="setup-content">
         <div className="setup-header">
           <h1 className="setup-title">BitChat</h1>
-          <p className="setup-subtitle">Mensajería privada y segura vía Bluetooth</p>
+          <p className="setup-subtitle">Chatea de forma privada sin internet</p>
         </div>
 
         <div className="network-visualization-large">
@@ -164,13 +164,13 @@ const BluetoothSetup = ({ onNext }) => {
           <div className="status-content">
             {!isEnabled ? (
               <>
-                <h2>Bluetooth es necesario</h2>
-                <p>BitChat utiliza Bluetooth para:</p>
+                <h2>Necesitamos activar Bluetooth</h2>
+                <p>BitChat usa Bluetooth para:</p>
               </>
             ) : (
               <>
-                <h2>Bluetooth activado</h2>
-                <p>Listo para comenzar a chatear</p>
+                <h2>¡Bluetooth activado!</h2>
+                <p>Ya puedes empezar a chatear</p>
               </>
             )}
           </div>
@@ -182,7 +182,7 @@ const BluetoothSetup = ({ onNext }) => {
                   <circle cx="12" cy="12" r="10" stroke="var(--accent-primary)" strokeWidth="2" fill="none" />
                   <circle cx="12" cy="12" r="3" fill="var(--accent-primary)" />
                 </svg>
-                <span>Descubrir usuarios cercanos</span>
+                <span>Encontrar personas cerca</span>
               </li>
               <li>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -194,14 +194,14 @@ const BluetoothSetup = ({ onNext }) => {
                   />
                   <path d="M9 12l2 2 4-4" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" />
                 </svg>
-                <span>Crear conexiones de red mesh</span>
+                <span>Conectar directamente</span>
               </li>
               <li>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <rect x="3" y="11" width="18" height="11" rx="2" stroke="var(--accent-primary)" strokeWidth="2" fill="none" />
                   <path d="M7 11V7a5 5 0 0110 0v4" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" />
                 </svg>
-                <span>Funcionar sin internet ni servidores</span>
+                <span>Funcionar sin internet</span>
               </li>
             </ul>
           )}
@@ -237,7 +237,7 @@ const BluetoothSetup = ({ onNext }) => {
         )}
 
         <p className="setup-note">
-          Este proceso solo toma unos segundos
+          Solo toma unos segundos
         </p>
       </div>
     </div>

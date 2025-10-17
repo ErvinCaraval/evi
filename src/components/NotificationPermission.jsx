@@ -39,11 +39,11 @@ const NotificationPermission = ({ onNext, showToast }) => {
         </div>
 
         <h2 className="permission-title">
-          Mantente al tanto de tus mensajes
+          ¿Recibir notificaciones?
         </h2>
 
         <p className="permission-description">
-          Recibe alertas instantáneas cuando lleguen nuevos mensajes, incluso si la app está en segundo plano.
+          Te avisaremos cuando lleguen mensajes nuevos, incluso si no tienes la app abierta.
         </p>
 
         <div className="notification-illustration">
@@ -140,7 +140,7 @@ const NotificationPermission = ({ onNext, showToast }) => {
                 fill="var(--accent-primary)"
               />
             </svg>
-            <span>No te pierdas ningún mensaje importante</span>
+            <span>No te pierdas mensajes importantes</span>
           </div>
 
           <div className="benefit-item">
@@ -148,7 +148,7 @@ const NotificationPermission = ({ onNext, showToast }) => {
               <circle cx="12" cy="12" r="10" stroke="var(--accent-primary)" strokeWidth="2" fill="none" />
               <path d="M12 6v6l4 2" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" />
             </svg>
-            <span>Responde rápidamente a tus contactos</span>
+            <span>Responde rápido a tus contactos</span>
           </div>
 
           <div className="benefit-item">
@@ -178,7 +178,7 @@ const NotificationPermission = ({ onNext, showToast }) => {
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
             <path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          Puedes personalizar las notificaciones en ajustes en cualquier momento
+          Puedes cambiar esto después en ajustes
         </p>
       </div>
     </div>
