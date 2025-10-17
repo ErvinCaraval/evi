@@ -3,17 +3,25 @@ import './WelcomeScreen.css'
 
 const WelcomeScreen = ({ onNext }) => {
   const [isVisible, setIsVisible] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
+
+  const handleContinue = () => {
+    setIsLoading(true)
+    setTimeout(() => {
+      onNext()
+    }, 300)
+  }
 
   return (
     <div className={`welcome-screen ${isVisible ? 'visible' : ''}`}>
       <div className="welcome-content">
         <div className="logo-section">
           <h1 className="app-title">BitChat</h1>
-          <p className="app-subtitle">Mensajería privada y segura vía Bluetooth</p>
+          <p className="app-subtitle">Chatea de forma privada sin internet</p>
         </div>
 
         <div className="network-visualization">
@@ -93,27 +101,27 @@ const WelcomeScreen = ({ onNext }) => {
                     strokeWidth="2"
                     strokeLinejoin="round"/>
             </svg>
-            <h3>Tu privacidad es nuestra prioridad</h3>
+            <h3>Privacidad total garantizada</h3>
           </div>
 
           <ul className="features-list">
             <li>
               <span className="feature-icon">🔒</span>
-              <span>Cifrado de extremo a extremo</span>
+              <span>Cifrado completo de tus mensajes</span>
             </li>
             <li>
               <span className="feature-icon">🚫</span>
-              <span>Sin servidores ni recopilación de datos</span>
+              <span>Sin servidores, sin rastreo</span>
             </li>
             <li>
               <span className="feature-icon">📱</span>
-              <span>Los mensajes permanecen en tu dispositivo</span>
+              <span>Todo queda en tu teléfono</span>
             </li>
           </ul>
         </div>
 
         <div className="permissions-preview">
-          <h4>Para comenzar, necesitaremos:</h4>
+          <h4>Te pediremos algunos permisos necesarios:</h4>
           <div className="permission-chips">
             <div className="permission-chip">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -123,7 +131,7 @@ const WelcomeScreen = ({ onNext }) => {
                       fill="none"/>
                 <circle cx="12" cy="9" r="2.5" stroke="var(--accent-primary)" strokeWidth="2" fill="none"/>
               </svg>
-              <span>Ubicación aproximada</span>
+              <span>Ubicación</span>
             </div>
             <div className="permission-chip">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -143,23 +151,36 @@ const WelcomeScreen = ({ onNext }) => {
         </div>
 
         <button
-          className="continue-btn"
-          onClick={onNext}
+          className={`continue-btn ${isLoading ? 'loading' : ''}`}
+          onClick={handleContinue}
+          disabled={isLoading}
           autoFocus
-          onKeyDown={(e) => e.key === 'Enter' && onNext()}
+          onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleContinue()}
         >
-          <span>Comenzar</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M5 12h14M12 5l7 7-7 7"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"/>
-          </svg>
+          {isLoading ? (
+            <>
+              <span>Iniciando...</span>
+              <svg className="loading-spinner" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </>
+          ) : (
+            <>
+              <span>Comenzar</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M12 5l7 7-7 7"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"/>
+              </svg>
+            </>
+          )}
         </button>
 
         <p className="disclaimer">
-          Solo te pediremos los permisos esenciales para el funcionamiento
+          Solo pedimos lo mínimo necesario para funcionar
         </p>
       </div>
     </div>

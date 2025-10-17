@@ -46,18 +46,150 @@
 
 .app {
   width: 100%;
-  max-width: 414px;
   height: 100vh;
-  max-height: 896px;
-  min-height: 640px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
   background-color: var(--background-color);
   font-family: 'Roboto', 'Segoe UI', sans-serif;
-  box-shadow: var(--shadow-lg);
+}
+
+/* App Shell Styles */
+.app-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  min-height: 64px;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 44px; /* Better touch target */
+}
+
+.back-btn:hover:not(:disabled) {
+  background: var(--bg-secondary);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.back-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.back-btn svg {
+  flex-shrink: 0;
+}
+
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex: 1;
+  margin-left: 16px;
+}
+
+.step-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 120px;
+  height: 4px;
+  background: var(--bg-secondary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  min-height: 0; /* Allow flex child to shrink */
+}
+
+/* Mobile-first responsive adjustments */
+@media (max-width: 480px) {
+  .app {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height */
+    max-height: 100vh;
+    max-height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .app-header {
+    padding: 12px 16px;
+    min-height: 56px;
+    flex-shrink: 0;
+  }
+
+  .back-btn {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .back-btn span {
+    display: none; /* Hide text on very small screens */
+  }
+
+  .step-text {
+    font-size: 12px;
+  }
+
+  .progress-bar {
+    width: 100px;
+  }
+
+  .app-main {
+    padding: 16px;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 0; /* Force flex child to respect parent height */
+  }
 }
 
 .app::before {

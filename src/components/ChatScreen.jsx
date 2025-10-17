@@ -73,23 +73,28 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
         )
       }, 1000)
 
-      // Simulate reply after a delay
+      // Simulate typing and reply
       setTimeout(() => {
-        const reply = {
-          id: messages.length + 2,
-          text: generateRandomReply(),
-          time: new Date().toLocaleTimeString(),
-          sender: selectedContact,
-          status: 'sent'
-        }
-        setMessages(prev => [...prev, reply])
+        setIsTyping(true)
+        
+        setTimeout(() => {
+          setIsTyping(false)
+          const reply = {
+            id: messages.length + 2,
+            text: generateRandomReply(),
+            time: new Date().toLocaleTimeString(),
+            sender: selectedContact,
+            status: 'sent'
+          }
+          setMessages(prev => [...prev, reply])
 
-        // Mark previous message as read
-        setMessages(prev => 
-          prev.map(msg => 
-            msg.id === newMessage.id ? { ...msg, status: 'read' } : msg
+          // Mark previous message as read
+          setMessages(prev => 
+            prev.map(msg => 
+              msg.id === newMessage.id ? { ...msg, status: 'read' } : msg
+            )
           )
-        )
+        }, 1500)
       }, 2000)
     }
   }
@@ -220,11 +225,34 @@ return (
 
       <div className="chat-messages">
         {messages.map((msg) => (
-          <div key={msg.id} className={`message ${msg.isSystem ? 'system-message' : ''}`}>
-            <span className="message-text">{msg.text}</span>
-            <span className="message-time">[{msg.time}]</span>
+          <div key={msg.id} className={`message ${msg.isSystem ? 'system-message' : ''} ${msg.sender === 'me' ? 'message-mine' : 'message-other'}`}>
+            <div className="message-bubble">
+              <span className="message-text">{msg.text}</span>
+              <div className="message-meta">
+                <span className="message-time">{msg.time}</span>
+                {msg.sender === 'me' && msg.status && (
+                  <span className={`status-icon status-${msg.status}`}>
+                    {msg.status === 'sending' && '⏳'}
+                    {msg.status === 'sent' && '✓'}
+                    {msg.status === 'delivered' && '✓✓'}
+                    {msg.status === 'read' && '✓✓'}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
         ))}
+        {isTyping && (
+          <div className="message message-other">
+            <div className="message-bubble typing-indicator">
+              <div className="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
 
@@ -246,7 +274,7 @@ return (
           <input
             type="text"
             className="message-input"
-            placeholder="Type a message..."
+            placeholder="Escribe un mensaje..."
             value={message}
             onChange={(e) => handleCommandInput(e.target.value)}
             onFocus={() => setIsInputFocused(true)}
@@ -273,7 +301,7 @@ return (
         </div>
 
         <div className="input-hint">
-          type a message...
+          Escribe tu mensaje aquí...
         </div>
       </div>
     </div>

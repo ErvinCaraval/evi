@@ -37,11 +37,11 @@ const BluetoothPermission = ({ onNext }) => {
         </div>
 
         <h2 className="permission-title">
-          Permitir conexión Bluetooth
+          ¿Activar Bluetooth?
         </h2>
 
         <p className="permission-description">
-          BitChat necesita conectarse con dispositivos cercanos para enviar y recibir mensajes de forma segura.
+          Necesitamos Bluetooth para conectarte con personas cercanas y enviar mensajes de forma segura.
         </p>
 
         <div className="bluetooth-info-card">
@@ -52,8 +52,8 @@ const BluetoothPermission = ({ onNext }) => {
               <circle cx="12" cy="12" r="6" stroke="var(--accent-primary)" strokeWidth="1" opacity="0.4" />
             </svg>
             <div>
-              <h4>Descubre usuarios cercanos</h4>
-              <p>Encuentra personas a tu alrededor para chatear</p>
+              <h4>Encuentra personas cerca</h4>
+              <p>Descubre quién está disponible para chatear</p>
             </div>
           </div>
 
@@ -68,8 +68,8 @@ const BluetoothPermission = ({ onNext }) => {
               <path d="M9 12l2 2 4-4" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" />
             </svg>
             <div>
-              <h4>Crea conexiones de red mesh</h4>
-              <p>Mensajería sin internet ni servidores</p>
+              <h4>Red directa entre dispositivos</h4>
+              <p>Chatea sin internet ni servidores</p>
             </div>
           </div>
 
@@ -103,7 +103,7 @@ const BluetoothPermission = ({ onNext }) => {
               fill="none"
             />
           </svg>
-          Solo se conectará cuando tú lo autorices. Puedes desactivarlo en cualquier momento.
+          Solo se conecta cuando tú quieras. Puedes desactivarlo cuando sea.
         </p>
       </div>
     </div>
