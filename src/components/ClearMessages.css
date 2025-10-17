@@ -8,6 +8,8 @@
   z-index: 1000;
   padding: 20px;
   animation: fadeIn 0.2s ease;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 .clear-messages-dialog {
