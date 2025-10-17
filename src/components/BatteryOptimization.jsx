@@ -74,15 +74,15 @@ const BatteryOptimization = ({ onNext }) => {
         </div>
 
         <div className="battery-actions">
-          <button className="disable-btn primary" onClick={handleDisable}>
+          <button className="btn btn-primary" onClick={handleDisable}>
             Desactivar optimización de batería
           </button>
 
           <div className="secondary-actions">
-            <button className="check-btn secondary" onClick={handleCheckAgain}>
+            <button className="btn btn-secondary" onClick={handleCheckAgain}>
               Verificar de nuevo
             </button>
-            <button className="skip-btn secondary" onClick={handleSkip}>
+            <button className="btn btn-secondary" onClick={handleSkip}>
               Omitir por ahora
             </button>
           </div>

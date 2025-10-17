@@ -208,8 +208,8 @@ const BluetoothSetup = ({ onNext }) => {
         </div>
 
         {!isEnabled ? (
-          <>
-            <button className="enable-btn" onClick={handleEnable}>
+          <div className="button-group">
+            <button className="btn btn-primary" onClick={handleEnable}>
               <span>Activar Bluetooth</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path
@@ -219,10 +219,10 @@ const BluetoothSetup = ({ onNext }) => {
               </svg>
             </button>
 
-            <button className="skip-btn secondary" onClick={handleSkip}>
+            <button className="btn btn-secondary" onClick={handleSkip}>
               Omitir
             </button>
-          </>
+          </div>
         ) : (
           <div className="success-message">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">

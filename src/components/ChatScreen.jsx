@@ -34,6 +34,14 @@ const ChatScreen = ({ onOpenChannels, onOpenNetwork, showToast }) => {
   const [showSquareMenu, setShowSquareMenu] = useState(false)
   const [showDotsMenu, setShowDotsMenu] = useState(false)
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      showToast('Escribe / para ver los comandos', 'info');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [showToast]);
+
   const handleSendMessage = () => {
     if (!message.trim()) return;
 

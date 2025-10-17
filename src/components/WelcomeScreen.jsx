@@ -143,7 +143,7 @@ const WelcomeScreen = ({ onNext }) => {
         </div>
 
         <button
-          className="continue-btn"
+          className="btn btn-primary"
           onClick={onNext}
           autoFocus
           onKeyDown={(e) => e.key === 'Enter' && onNext()}

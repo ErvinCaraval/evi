@@ -111,19 +111,19 @@ const LocationPermission = ({ onNext, showToast }) => {
 
         <div className="permission-actions">
           <button
-            className="permission-btn primary"
+            className="btn btn-primary"
             onClick={() => handleAction('allow')}
           >
             Mientras uso la app
           </button>
           <button
-            className="permission-btn secondary"
+            className="btn btn-secondary"
             onClick={() => handleAction('once')}
           >
             Solo esta vez
           </button>
           <button
-            className="permission-btn tertiary"
+            className="btn btn-secondary"
             onClick={() => handleAction('deny')}
           >
             No permitir

@@ -93,10 +93,10 @@ const NotificationPermission = ({ onNext, showToast }) => {
         </div>
 
         <div className="permission-actions">
-          <button className="permission-btn primary" onClick={() => handleAction('allow')}>
+          <button className="btn btn-primary" onClick={() => handleAction('allow')}>
             Permitir notificaciones
           </button>
-          <button className="permission-btn tertiary" onClick={() => handleAction('deny')}>
+          <button className="btn btn-secondary" onClick={() => handleAction('deny')}>
             Omitir por ahora
           </button>
         </div>

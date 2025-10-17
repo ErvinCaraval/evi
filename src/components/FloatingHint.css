@@ -1,0 +1,32 @@
+.floating-hint {
+  position: absolute;
+  bottom: 80px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  background-color: var(--accent-primary);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: float 3s ease-in-out infinite, fadeInOut 5s ease-in-out forwards;
+  z-index: 1001; /* Ensure it's above other elements */
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+  }
+  20%, 80% {
+    opacity: 1;
+  }
+}

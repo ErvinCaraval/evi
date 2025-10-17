@@ -2,7 +2,6 @@ import { useState } from 'react'
 import './App.css'
 import WelcomeScreen from './components/WelcomeScreen'
 import LocationPermission from './components/LocationPermission'
-import BluetoothPermission from './components/BluetoothPermission'
 import NotificationPermission from './components/NotificationPermission'
 import BluetoothSetup from './components/BluetoothSetup'
 import BatteryOptimization from './components/BatteryOptimization'
@@ -25,7 +24,6 @@ function App() {
   const onboardingSteps = [
     { component: WelcomeScreen, name: 'welcome' },
     { component: LocationPermission, name: 'location' },
-    { component: BluetoothPermission, name: 'bluetooth' },
     { component: NotificationPermission, name: 'notification' },
     { component: BluetoothSetup, name: 'setup' },
     { component: BatteryOptimization, name: 'battery' },
