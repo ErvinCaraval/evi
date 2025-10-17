@@ -11,6 +11,8 @@
   z-index: 1000;
   opacity: 0;
   transition: opacity var(--transition-normal);
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 .permission-modal.visible {
@@ -407,15 +409,22 @@
 
 @media (max-width: 480px) {
   .permission-modal {
-    padding: var(--spacing-xs);
-    align-items: flex-end;
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
   }
 
   .permission-card {
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    max-height: 90vh;
+    padding: var(--spacing-md);
+    border-radius: 0;
+    max-height: 100vh;
+    height: 100vh;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: none;
+    width: 100%;
   }
 
   .permission-icon {

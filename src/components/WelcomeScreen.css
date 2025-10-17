@@ -1,9 +1,14 @@
 .welcome-screen {
-  max-width: 480px;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   opacity: 0;
   transform: translateY(24px);
   transition: all var(--transition-slow);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .welcome-screen.visible {
@@ -18,6 +23,10 @@
   align-items: center;
   position: relative;
   z-index: 1;
+  padding: var(--spacing-md);
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .logo-section {
@@ -278,12 +287,20 @@
 }
 
 @media (max-width: 480px) {
+  .welcome-screen {
+    justify-content: flex-start;
+    padding-top: var(--spacing-md);
+  }
+
   .welcome-content {
     gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    min-height: 100%;
+    justify-content: space-between;
   }
 
   .app-title {
-    font-size: 36px;
+    font-size: 32px;
   }
 
   .app-subtitle {
@@ -291,12 +308,15 @@
   }
 
   .network-visualization {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
   }
 
   .features-card {
     padding: var(--spacing-sm);
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .features-header {
@@ -316,7 +336,7 @@
   }
 
   .permission-chip {
-    padding: 10px 14px;
+    padding: 8px 12px;
     font-size: 12px;
   }
 
@@ -328,9 +348,12 @@
   .continue-btn {
     padding: 14px var(--spacing-sm);
     font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .disclaimer {
     font-size: 12px;
+    text-align: center;
   }
 }
