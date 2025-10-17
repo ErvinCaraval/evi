@@ -1,42 +1,27 @@
+import { useState } from 'react';
 import './LocationChannels.css'
 
-const LocationChannels = ({ onClose }) => {
-  const channels = [
-    {
-      id: 1,
-      name: 'mesh',
-      type: 'mesh',
-      count: 0,
-      range: '~5-20 m',
-      icon: '✓',
-      active: true
-    },
-    {
-      id: 2,
-      name: 'bluetooth',
-      type: 'bluetooth',
-      count: 10,
-      range: '~5-20 m',
-      icon: '📶'
-    },
-    {
-      id: 3,
-      name: 'block',
-      type: 'blocked',
-      count: 0,
-      location: '~0.2 km • Ciudad Modelo',
-      icon: '🚫'
-    },
-    {
-      id: 4,
-      name: 'neighborhood',
-      type: 'neighborhood',
-      count: 0,
-      hash: '#d29e6ve',
-      location: '~0.2 km • Ciudad Modelo',
-      icon: '👥'
-    }
-  ]
+const LocationChannels = ({ onClose, showToast }) => {
+  const initialChannels = [
+    { id: 1, name: 'mesh', type: 'mesh', count: 0, range: '~5-20 m', icon: '✓', active: true, joined: true },
+    { id: 2, name: 'bluetooth', type: 'bluetooth', count: 10, range: '~5-20 m', icon: '📶', joined: false },
+    { id: 3, name: 'block', type: 'blocked', count: 0, location: '~0.2 km • Ciudad Modelo', icon: '🚫', joined: false },
+    { id: 4, name: 'neighborhood', type: 'neighborhood', count: 0, hash: '#d29e6ve', location: '~0.2 km • Ciudad Modelo', icon: '👥', joined: false }
+  ];
+
+  const [channels, setChannels] = useState(initialChannels);
+
+  const handleToggleJoin = (channelId) => {
+    setChannels(channels.map(channel => {
+      if (channel.id === channelId) {
+        const newJoinedState = !channel.joined;
+        const action = newJoinedState ? 'unido' : 'abandonado';
+        showToast(`Te has ${action} al canal #${channel.name}`, 'info');
+        return { ...channel, joined: newJoinedState };
+      }
+      return channel;
+    }));
+  };
 
   return (
     <div className="location-channels">
@@ -105,20 +90,17 @@ const LocationChannels = ({ onClose }) => {
                 </div>
 
                 <div className="channel-actions">
-                  {channel.active ? (
-                    <div className="active-indicator">
+                  <button className={`join-btn ${channel.joined ? 'joined' : ''}`} onClick={() => handleToggleJoin(channel.id)}>
+                    {channel.joined ? (
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
-                              fill="var(--accent-primary)"/>
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="var(--accent-primary)"/>
                       </svg>
-                    </div>
-                  ) : (
-                    <button className="join-btn">
+                    ) : (
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="var(--text-secondary)"/>
                       </svg>
-                    </button>
-                  )}
+                    )}
+                  </button>
                 </div>
               </div>
             </div>

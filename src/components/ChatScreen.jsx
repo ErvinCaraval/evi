@@ -5,7 +5,6 @@ import ContactActions from './ContactActions'
 import FavoriteContact from './FavoriteContact'
 import OnlineUsers from './OnlineUsers'
 import BlockedContact from './BlockedContact'
-import Toast from './Toast'
 import FloatingMenu from './FloatingMenu'
 import HugAnimation from './HugAnimation'
 import PrivateMessage from './PrivateMessage'
@@ -15,7 +14,7 @@ import SquareMenu from './SquareMenu'
 import DotsMenu from './DotsMenu'
 import { mockUsers, mockMessages, generateRandomReply } from '../utils/mockData'
 
-const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
+const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork, showToast }) => {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState(mockMessages)
   const [contacts, setContacts] = useState(mockUsers)
@@ -26,7 +25,6 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
   const [showBlockedContact, setShowBlockedContact] = useState(false)
   const [selectedContact, setSelectedContact] = useState('anon64')
   const [replyingTo, setReplyingTo] = useState(null)
-  const [toast, setToast] = useState({ show: false, message: '', type: 'info' })
   const [isTyping, setIsTyping] = useState(false)
   const [showFloatingMenu, setShowFloatingMenu] = useState(false)
   const [showHugAnimation, setShowHugAnimation] = useState(false)
@@ -37,13 +35,21 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
   const [showSquareMenu, setShowSquareMenu] = useState(false)
   const [showDotsMenu, setShowDotsMenu] = useState(false)
 
-  const showToast = (message, type = 'success') => {
-    setToast({ show: true, message, type });
-    setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000);
-  }
-
   const handleSendMessage = () => {
     if (message.trim()) {
+      const text = message.trim();
+      if (text.toLowerCase() === '/status') {
+        const statusMessage = {
+          id: messages.length + 1,
+          text: `[System] Conectado a 5 peers. Canales activos: #mesh, #general.`,
+          time: new Date().toLocaleTimeString(),
+          isSystem: true,
+        };
+        setMessages(prev => [...prev, statusMessage]);
+        setMessage('');
+        return;
+      }
+
       const newMessage = {
         id: messages.length + 1,
         text: message.trim(),
@@ -170,16 +176,6 @@ const ChatScreen = ({ onOpenCommands, onOpenChannels, onOpenNetwork }) => {
 
 return (
     <>
-    {toast.show && (
-      <div className="toast-container">
-        <Toast 
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast({ show: false, message: '', type: 'info' })}
-        />
-      </div>
-    )}
-
     <div className="chat-screen">
       <div className="chat-header">
         <div className="header-left">
