@@ -1,37 +1,25 @@
-import { useState, useEffect } from 'react'
-import './FloatingMenu.css'
+import { useState, useEffect } from 'react';
+import './FloatingMenu.css';
 
-const FloatingMenu = ({ contactName, position, onClose, onRemove, onViewOnline, onFavorite, onBlock, onSquareMenu, onDotsMenu }) => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [clickedButton, setClickedButton] = useState(null)
+const FloatingMenu = ({
+  onClose,
+  showToast
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setIsVisible(true), 10)
-  }, [])
+    setTimeout(() => setIsVisible(true), 10);
+  }, []);
 
-  const handleAction = (action, buttonName) => {
-    setClickedButton(buttonName)
-    setTimeout(() => {
-      setIsVisible(false)
-      setTimeout(() => {
-        action()
-        onClose()
-      }, 200)
-    }, 300)
-  }
-
-  const handleIconClick = (iconName, action) => {
-    setClickedButton(iconName)
-    setTimeout(() => {
-      setIsVisible(false)
-      setTimeout(() => {
-        if (action) {
-          action()
-        }
-        onClose()
-      }, 200)
-    }, 300)
-  }
+  const handleAction = (action, message) => {
+    if (action) {
+      action();
+    }
+    if (message) {
+      showToast(message, 'info');
+    }
+    // Don't close for every action, maybe just for some
+  };
 
   return (
     <div className="floating-menu-overlay" onClick={onClose}>
@@ -40,64 +28,39 @@ const FloatingMenu = ({ contactName, position, onClose, onRemove, onViewOnline, 
         onClick={(e) => e.stopPropagation()}
       >
         <div className="floating-menu-header">
-          <button
-            className={`menu-option remove ${clickedButton === 'remove' ? 'clicked' : ''}`}
-            onClick={() => handleAction(onRemove, 'remove')}
-          >
-            <span className="option-text">Quitar</span>
-          </button>
-          <div className="contact-badge">
-            <span className="contact-name">{contactName}</span>
-          </div>
+          <span className="menu-title">Menú Principal</span>
         </div>
 
-        <div className="floating-menu-actions">
-          <button
-            className={`action-button online ${clickedButton === 'online' ? 'clicked' : ''}`}
-            onClick={() => handleAction(onViewOnline, 'online')}
-          >
-            <span className="action-label">Usuarios Online (w)</span>
-          </button>
+        <div className="floating-menu-divider"></div>
 
-          <button
-            className={`action-button favorite ${clickedButton === 'favorite' ? 'clicked' : ''}`}
-            onClick={() => handleAction(onFavorite, 'favorite')}
-          >
-            <span className="action-label">Favorito</span>
-          </button>
-
-          <button
-            className={`action-button block ${clickedButton === 'block' ? 'clicked' : ''}`}
-            onClick={() => handleAction(onBlock, 'block')}
-          >
-            <span className="action-label">Bloquear</span>
-          </button>
+        {/* General Options */}
+        <div className="floating-menu-section">
+            <button className="dots-option-item" onClick={() => { handleAction(null, 'Abriendo editor de perfil...'); onClose(); }}>
+                <span className="dots-option-title">Editar mi perfil</span>
+            </button>
+             <button className="dots-option-item" onClick={() => { handleAction(null, 'Abriendo mensajes guardados...'); onClose(); }}>
+                <span className="dots-option-title">Mensajes guardados</span>
+            </button>
+            <button className="dots-option-item" onClick={() => { handleAction(null, 'Cargando fondos de chat...'); onClose(); }}>
+                <span className="dots-option-title">Fondos de chat</span>
+            </button>
         </div>
 
-        <div className="floating-menu-buttons">
-          <button
-            className={`icon-button square ${clickedButton === 'square' ? 'clicked' : ''}`}
-            onClick={() => handleIconClick('square', onSquareMenu)}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/>
-            </svg>
-          </button>
+        <div className="floating-menu-divider"></div>
 
-          <button
-            className={`icon-button dots ${clickedButton === 'dots' ? 'clicked' : ''}`}
-            onClick={() => handleIconClick('dots', onDotsMenu)}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <circle cx="6" cy="12" r="2" fill="currentColor"/>
-              <circle cx="12" cy="12" r="2" fill="currentColor"/>
-              <circle cx="18" cy="12" r="2" fill="currentColor"/>
-            </svg>
-          </button>
+        {/* Settings */}
+        <div className="floating-menu-section">
+            <button className="dots-option-item" onClick={() => { handleAction(null, 'Cambiando a modo oscuro...'); onClose(); }}>
+                <span className="dots-option-title">Activar Modo Oscuro</span>
+            </button>
+            <button className="dots-option-item" onClick={() => { handleAction(null, 'Abriendo configuración...'); onClose(); }}>
+                <span className="dots-option-title">Configuración</span>
+            </button>
         </div>
+
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FloatingMenu
+export default FloatingMenu;

@@ -1,11 +1,10 @@
-
 .bluetooth-setup {
   width: 100%;
   height: 100%;
   opacity: 0;
   transform: translateY(24px);
   transition: all var(--transition-slow);
-  overflow: hidden; /* Prevent all scrolling on the main container */
+  overflow: hidden;
 }
 
 .bluetooth-setup.visible {
@@ -16,21 +15,20 @@
 .setup-content {
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Reduced gap */
+  gap: 12px;
   align-items: center;
   position: relative;
   z-index: 1;
   height: 100%;
-  padding: 0 12px; /* Add some horizontal padding */
-  /* Hide scrollbars but allow scrolling if absolutely necessary */
+  padding: 0 12px;
   overflow-y: auto; 
   overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .setup-content::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 .setup-header {
@@ -41,7 +39,7 @@
 }
 
 .setup-title {
-  font-size: 28px; /* Reduced font size */
+  font-size: 28px;
   font-weight: 700;
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
@@ -52,14 +50,14 @@
 }
 
 .setup-subtitle {
-  font-size: 13px; /* Reduced font size */
+  font-size: 13px;
   color: var(--text-secondary);
   line-height: 1.4;
 }
 
 .network-visualization-large {
-  width: 180px; /* Drastically reduced size */
-  height: 180px; /* Drastically reduced size */
+  width: 180px;
+  height: 180px;
   position: relative;
   animation: fadeIn 0.8s ease-out 0.2s backwards;
   flex-shrink: 0;
@@ -88,11 +86,11 @@
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 12px; /* Reduced padding */
+  padding: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px; /* Reduced gap */
+  gap: 8px;
   animation: slideUp 0.6s ease-out 0.4s backwards;
   box-shadow: var(--shadow-md);
   transition: all var(--transition-normal);
@@ -105,8 +103,8 @@
 }
 
 .bluetooth-icon-large {
-  width: 48px; /* Reduced size */
-  height: 48px; /* Reduced size */
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.05);
   display: flex;
@@ -116,8 +114,8 @@
 }
 
 .bluetooth-icon-large svg {
-    width: 24px; /* Reduced icon size */
-    height: 24px; /* Reduced icon size */
+    width: 24px;
+    height: 24px;
 }
 
 .bluetooth-status-card.enabled .bluetooth-icon-large {
@@ -129,7 +127,7 @@
 }
 
 .status-content h2 {
-  font-size: 16px; /* Reduced font size */
+  font-size: 16px;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 4px;
@@ -137,7 +135,7 @@
 }
 
 .status-content p {
-  font-size: 13px; /* Reduced font size */
+  font-size: 13px;
   color: var(--text-secondary);
   line-height: 1.4;
 }
@@ -146,7 +144,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 6px; /* Reduced gap */
+  gap: 6px;
   width: 100%;
   margin-top: 4px;
 }
@@ -154,11 +152,11 @@
 .bluetooth-features li {
   display: flex;
   align-items: center;
-  gap: 8px; /* Reduced gap */
-  font-size: 12px; /* Reduced font size */
+  gap: 8px;
+  font-size: 12px;
   color: var(--text-secondary);
   line-height: 1.4;
-  padding: 6px 8px; /* Reduced padding */
+  padding: 6px 8px;
   background: rgba(0, 255, 136, 0.03);
   border-radius: var(--radius-sm);
   border: 1px solid rgba(0, 255, 136, 0.08);
@@ -166,12 +164,14 @@
 
 .bluetooth-features li svg {
   flex-shrink: 0;
-  width: 16px; /* Smaller icons */
-  height: 16px; /* Smaller icons */
+  width: 16px;
+  height: 16px;
 }
 
 .button-group {
     display: flex;
+    flex-direction: column;
+    align-items: stretch;
     width: 100%;
     gap: 8px;
 }
@@ -179,15 +179,27 @@
 .success-message {
   padding: 10px;
 }
+
 .success-message p {
   font-size: 14px;
 }
 
-.setup-note {
-  font-size: 11px; /* Reduced font size */
-  color: var(--text-muted);
-  text-align: center;
-  line-height: 1.4;
-  padding-bottom: 8px;
-  flex-shrink: 0;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }

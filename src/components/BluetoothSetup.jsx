@@ -1,6 +1,29 @@
 import { useState, useEffect } from 'react'
 import './BluetoothSetup.css'
 
+const NetworkVisualization = ({ isEnabled }) => (
+    <svg className="network-svg" viewBox="0 0 200 200">
+        {/* Center Node */}
+        <circle className={`center-node ${!isEnabled ? 'disabled' : ''}`} cx="100" cy="100" r="12" fill="var(--accent-primary)" />
+
+        {/* Network Lines */}
+        {[...Array(6)].map((_, i) => {
+            const angle = (i * 60) * (Math.PI / 180);
+            const x2 = 100 + Math.cos(angle) * 80;
+            const y2 = 100 + Math.sin(angle) * 80;
+            return <line key={i} className={`network-line ${!isEnabled ? 'disabled' : ''}`} x1="100" y1="100" x2={x2} y2={y2} stroke="var(--accent-primary-faded)" strokeWidth="2" style={{ animationDelay: `${i * 0.1}s` }} />;
+        })}
+
+        {/* Outer Nodes */}
+        {[...Array(6)].map((_, i) => {
+            const angle = (i * 60) * (Math.PI / 180);
+            const cx = 100 + Math.cos(angle) * 80;
+            const cy = 100 + Math.sin(angle) * 80;
+            return <circle key={i} className={`network-node ${!isEnabled ? 'disabled' : ''}`} cx={cx} cy={cy} r="6" fill="var(--accent-primary)" style={{ animationDelay: `${0.5 + i * 0.1}s` }} />;
+        })}
+    </svg>
+);
+
 const BluetoothSetup = ({ onNext }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [isEnabled, setIsEnabled] = useState(false)
@@ -11,8 +34,6 @@ const BluetoothSetup = ({ onNext }) => {
 
   const handleEnable = () => {
     setIsEnabled(true)
-    // advance to next step after enabling to keep the flow moving
-    // only advance automatically if the user didn't manually skip
     setTimeout(() => {
       if (onNext && !skipRequested) onNext()
     }, 700)
@@ -34,121 +55,7 @@ const BluetoothSetup = ({ onNext }) => {
         </div>
 
         <div className="network-visualization-large">
-          <svg className="network-svg" viewBox="0 0 400 400">
-            <defs>
-              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity="0.2" />
-                <stop offset="50%" stopColor="var(--accent-primary)" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="var(--accent-primary)" stopOpacity="0.2" />
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-
-            {!isEnabled ? (
-              <>
-                <g className="network-lines">
-                  {[...Array(8)].map((_, i) => {
-                    const angle = (i * 45) * Math.PI / 180
-                    const x1 = 200 + Math.cos(angle) * 100
-                    const y1 = 200 + Math.sin(angle) * 100
-                    return (
-                      <line
-                        key={`line-${i}`}
-                        x1="200"
-                        y1="200"
-                        x2={x1}
-                        y2={y1}
-                        stroke="url(#lineGradient)"
-                        strokeWidth="2"
-                        className="network-line disabled"
-                        style={{ animationDelay: `${i * 0.1}s` }}
-                      />
-                    )
-                  })}
-                </g>
-
-                <circle
-                  cx="200"
-                  cy="200"
-                  r="8"
-                  fill="var(--text-muted)"
-                  className="center-node disabled"
-                />
-
-                {[...Array(8)].map((_, i) => {
-                  const angle = (i * 45) * Math.PI / 180
-                  const x = 200 + Math.cos(angle) * 100
-                  const y = 200 + Math.sin(angle) * 100
-                  return (
-                    <circle
-                      key={`node-${i}`}
-                      cx={x}
-                      cy={y}
-                      r="6"
-                      fill="var(--text-muted)"
-                      className="network-node disabled"
-                    />
-                  )
-                })}
-              </>
-            ) : (
-              <>
-                <g className="network-lines">
-                  {[...Array(8)].map((_, i) => {
-                    const angle = (i * 45) * Math.PI / 180
-                    const x1 = 200 + Math.cos(angle) * 100
-                    const y1 = 200 + Math.sin(angle) * 100
-                    return (
-                      <line
-                        key={`line-${i}`}
-                        x1="200"
-                        y1="200"
-                        x2={x1}
-                        y2={y1}
-                        stroke="url(#lineGradient)"
-                        strokeWidth="2"
-                        className="network-line"
-                        style={{ animationDelay: `${i * 0.1}s` }}
-                      />
-                    )
-                  })}
-                </g>
-
-                <circle
-                  cx="200"
-                  cy="200"
-                  r="8"
-                  fill="var(--accent-primary)"
-                  filter="url(#glow)"
-                  className="center-node"
-                />
-
-                {[...Array(8)].map((_, i) => {
-                  const angle = (i * 45) * Math.PI / 180
-                  const x = 200 + Math.cos(angle) * 100
-                  const y = 200 + Math.sin(angle) * 100
-                  return (
-                    <circle
-                      key={`node-${i}`}
-                      cx={x}
-                      cy={y}
-                      r="6"
-                      fill="var(--accent-primary)"
-                      filter="url(#glow)"
-                      className="network-node"
-                      style={{ animationDelay: `${i * 0.1}s` }}
-                    />
-                  )
-                })}
-              </>
-            )}
-          </svg>
+           <NetworkVisualization isEnabled={isEnabled} />
         </div>
 
         <div className={`bluetooth-status-card ${isEnabled ? 'enabled' : ''}`}>
@@ -176,33 +83,10 @@ const BluetoothSetup = ({ onNext }) => {
           </div>
 
           {!isEnabled && (
-            <ul className="bluetooth-features">
-              <li>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="10" stroke="var(--accent-primary)" strokeWidth="2" fill="none" />
-                  <circle cx="12" cy="12" r="3" fill="var(--accent-primary)" />
-                </svg>
-                <span>Descubrir usuarios cercanos</span>
-              </li>
-              <li>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z"
-                    stroke="var(--accent-primary)"
-                    strokeWidth="2"
-                    fill="none"
-                  />
-                  <path d="M9 12l2 2 4-4" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-                <span>Crear conexiones de red mesh</span>
-              </li>
-              <li>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="11" width="18" height="11" rx="2" stroke="var(--accent-primary)" strokeWidth="2" fill="none" />
-                  <path d="M7 11V7a5 5 0 0110 0v4" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-                <span>Funcionar sin internet ni servidores</span>
-              </li>
+             <ul className="bluetooth-features">
+                <li>- Encontrar amigos cerca</li>
+                <li>- Enviar y recibir mensajes sin internet</li>
+                <li>- Crear una red de malla local</li>
             </ul>
           )}
         </div>
@@ -235,10 +119,6 @@ const BluetoothSetup = ({ onNext }) => {
             <p>Todo listo para comenzar</p>
           </div>
         )}
-
-        <p className="setup-note">
-          Este proceso solo toma unos segundos
-        </p>
       </div>
     </div>
   )

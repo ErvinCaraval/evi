@@ -20,26 +20,24 @@ const ShieldIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
 );
 
-const SettingsIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+// --- New Privacy Icon ---
+const PrivacyShieldIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V13H5V6.3l7-3.11v10.8z" fill="var(--text-secondary)"/>
     </svg>
 );
 
-const NotificationPermission = ({ onNext, showToast }) => {
+
+const NotificationPermission = ({ onComplete }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 100);
   }, []);
 
-  const handleAction = (action) => {
-    if (showToast) {
-      const message = action === 'allow' ? 'Notificaciones activadas' : 'Notificaciones desactivadas';
-      showToast(message, action === 'allow' ? 'success' : 'info');
-    }
-    setTimeout(() => onNext(), 300);
+  const handleAction = (status) => {
+    setIsVisible(false); // Animate out
+    setTimeout(() => onComplete(status), 300);
   };
 
   return (
@@ -94,17 +92,19 @@ const NotificationPermission = ({ onNext, showToast }) => {
 
         <div className="permission-actions">
           <button className="btn btn-primary" onClick={() => handleAction('allow')}>
-            Permitir notificaciones
+            Activar notificaciones
           </button>
           <button className="btn btn-secondary" onClick={() => handleAction('deny')}>
-            Omitir por ahora
+            Ahora no
           </button>
         </div>
 
-        <div className="permission-note">
-          <SettingsIcon />
-          <span>Puedes personalizar las notificaciones en ajustes en cualquier momento.</span>
+        {/* --- NEW PRIVACY NOTICE --- */}
+        <div className="privacy-notice">
+          <PrivacyShieldIcon />
+          <span><b>Privacidad garantizada:</b> Solo recibirás alertas de mensajes. Cero spam.</span>
         </div>
+
       </div>
     </div>
   );
