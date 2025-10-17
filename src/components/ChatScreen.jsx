@@ -388,11 +388,11 @@ return (
     )}
 
     {showSquareMenu && (
-      <SquareMenu onClose={() => setShowSquareMenu(false)} />
+      <SquareMenu onClose={() => setShowSquareMenu(false)} showToast={showToast} />
     )}
 
     {showDotsMenu && (
-      <DotsMenu onClose={() => setShowDotsMenu(false)} />
+      <DotsMenu onClose={() => setShowDotsMenu(false)} showToast={showToast} />
     )}
     </>
   )

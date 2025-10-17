@@ -1,6 +1,22 @@
+import { useState } from 'react'
 import './SquareMenu.css'
 
-const SquareMenu = ({ onClose }) => {
+const SquareMenu = ({ onClose, showToast }) => {
+  const [toggles, setToggles] = useState({
+    availability: true,
+    notifications: true,
+    darkMode: true,
+    privacy: true
+  })
+
+  const handleToggle = (key, title) => {
+    setToggles(prev => {
+      const newState = !prev[key]
+      showToast(`${title} ${newState ? 'activado' : 'desactivado'}`, 'info')
+      return { ...prev, [key]: newState }
+    })
+  }
+
   return (
     <div className="square-menu-overlay" onClick={onClose}>
       <div className="square-menu-panel" onClick={(e) => e.stopPropagation()}>
@@ -26,7 +42,8 @@ const SquareMenu = ({ onClose }) => {
               <span className="setting-title">Disponibilidad</span>
               <span className="setting-subtitle">Actualmente disponible</span>
             </div>
-            <div className="setting-toggle active">
+            <div className={`setting-toggle ${toggles.availability ? 'active' : ''}`}
+                 onClick={() => handleToggle('availability', 'Disponibilidad')}>
               <div className="toggle-knob"></div>
             </div>
           </div>
@@ -42,7 +59,8 @@ const SquareMenu = ({ onClose }) => {
               <span className="setting-title">Notificaciones</span>
               <span className="setting-subtitle">Sonido activado</span>
             </div>
-            <div className="setting-toggle active">
+            <div className={`setting-toggle ${toggles.notifications ? 'active' : ''}`}
+                 onClick={() => handleToggle('notifications', 'Notificaciones')}>
               <div className="toggle-knob"></div>
             </div>
           </div>
@@ -60,7 +78,8 @@ const SquareMenu = ({ onClose }) => {
               <span className="setting-title">Modo oscuro</span>
               <span className="setting-subtitle">Tema predeterminado</span>
             </div>
-            <div className="setting-toggle active">
+            <div className={`setting-toggle ${toggles.darkMode ? 'active' : ''}`}
+                 onClick={() => handleToggle('darkMode', 'Modo oscuro')}>
               <div className="toggle-knob"></div>
             </div>
           </div>
@@ -76,7 +95,8 @@ const SquareMenu = ({ onClose }) => {
               <span className="setting-title">Privacidad</span>
               <span className="setting-subtitle">Cifrado end-to-end</span>
             </div>
-            <div className="setting-toggle active">
+            <div className={`setting-toggle ${toggles.privacy ? 'active' : ''}`}
+                 onClick={() => handleToggle('privacy', 'Privacidad')}>
               <div className="toggle-knob"></div>
             </div>
           </div>
