@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ChatScreen.css';
@@ -33,15 +32,72 @@ const ChatScreen = ({ showToast }) => {
   const hintTimeoutRef = useRef(null);
   const [actionContext, setActionContext] = useState(null);
 
+  const addSystemMessage = (text) => {
+    const systemMessage = {
+      id: Date.now(),
+      text,
+      time: new Date().toLocaleTimeString(),
+      isSystem: true,
+    };
+    setMessages(prev => [...prev, systemMessage]);
+  };
+
   const handleSendMessage = () => {
     if (!message.trim()) return;
     const text = message.trim();
+
     if (text.startsWith('/')) {
+      const [command, ...args] = text.split(' ');
+      const arg = args.join(' ');
+      addSystemMessage(text); // Show command in chat
+
+      switch (command) {
+        case '/block':
+          addSystemMessage(`> Bloqueaste a ${arg || 'un usuario'}.`);
+          showToast(`Bloqueaste a ${arg || 'un usuario'}`, 'success');
+          break;
+        case '/unblock':
+          addSystemMessage(`> Desbloqueaste a ${arg || 'un usuario'}.`);
+          showToast(`Desbloqueaste a ${arg || 'un usuario'}`, 'success');
+          break;
+        case '/channels':
+          addSystemMessage('> Navegando a canales...');
+          navigate('/channels');
+          break;
+        case '/clear':
+          setShowClearMessages(true); // Keep confirmation for this destructive action
+          break;
+        case '/hug':
+          addSystemMessage(`> Le enviaste un abrazo a ${arg || 'alguien'}.`);
+          setShowHugAnimation(true);
+          break;
+        case '/join':
+          addSystemMessage(`> Te uniste al canal #${arg}.`);
+          break;
+        case '/msg':
+        case '/m':
+          const recipient = args[0] || 'alguien';
+          const privateMsg = args.slice(1).join(' ');
+          addSystemMessage(`> (Mensaje privado a ${recipient}): ${privateMsg}`);
+          showToast('Mensaje privado enviado', 'success');
+          break;
+        case '/slap':
+          addSystemMessage(`> Abofeteaste a ${arg || 'alguien'} con una trucha.`);
+          break;
+        case '/w':
+          addSystemMessage('> Usuarios en línea: @anon9680, @anon64, @user123, @peerx');
+          break;
+        default:
+          addSystemMessage(`> Comando no reconocido: ${command}`);
+          break;
+      }
       setMessage('');
       setShowCommandSuggestions(false);
       return;
     }
-    const newMessage = { id: Date.now(), text: message.trim(), time: new Date().toLocaleTimeString(), sender: 'me', status: 'sending' };
+
+    // Regular message sending
+    const newMessage = { id: Date.now(), text, time: new Date().toLocaleTimeString(), sender: 'me', status: 'sending' };
     setMessages(prev => [...prev, newMessage]);
     setMessage('');
     setTimeout(() => {
@@ -110,25 +166,33 @@ const ChatScreen = ({ showToast }) => {
     const userName = user.name || 'este usuario'; // Use user.name for clarity
 
     if (actionContext) {
+      const message = { time: new Date().toLocaleTimeString(), isSystem: true };
       switch (actionContext) {
         case 'favorite':
-          showToast(`Has añadido a ${userName} a tus favoritos.`, 'success');
+          message.text = `> Has añadido a ${userName} a tus favoritos.`;
+          showToast(message.text, 'success');
           break;
         case 'block':
-          showToast(`Has bloqueado a ${userName}.`, 'success');
+          message.text = `> Has bloqueado a ${userName}.`;
+          showToast(message.text, 'success');
           break;
         case 'remove':
-          showToast(`Has eliminado a ${userName} de tus contactos.`, 'success');
+          message.text = `> Has eliminado a ${userName} de tus contactos.`;
+          showToast(message.text, 'success');
           break;
         default:
           setSelectedContact(userName);
-          showToast(`Ahora estás chateando con ${userName}.`);
+          message.text = `> Ahora estás chateando con ${userName}.`;
+          showToast(message.text);
           break;
       }
+      setMessages(prev => [...prev, message]);
     } else {
       // Fallback if no action context is set
       setSelectedContact(userName);
-      showToast(`Ahora estás chateando con ${userName}.`);
+      const message = { text: `> Ahora estás chateando con ${userName}.`, time: new Date().toLocaleTimeString(), isSystem: true };
+      setMessages(prev => [...prev, message]);
+      showToast(message.text);
     }
 
     setShowOnlineUsers(false);
@@ -136,10 +200,21 @@ const ChatScreen = ({ showToast }) => {
   };
 
   const handleAddAttachment = () => setShowContactActions(true);
-  const handleClearMessages = () => { setMessages([]); setShowClearMessages(false); showToast('Mensajes eliminados', 'success'); };
-  const handleUnblockContact = () => showToast(`${selectedContact} ha sido desbloqueado.`, 'success');
+  const handleClearMessages = () => { 
+    addSystemMessage('> Historial de chat limpiado.');
+    setMessages([]); 
+    setShowClearMessages(false); 
+    showToast('Mensajes eliminados', 'success'); 
+  };
+  const handleUnblockContact = () => {
+    addSystemMessage(`> ${selectedContact} ha sido desbloqueado.`);
+    showToast(`${selectedContact} ha sido desbloqueado.`, 'success');
+  }
   const handleSelectCommand = (command) => { setMessage(command.split(' ')[0] + ' '); setShowCommandSuggestions(false); document.querySelector('.message-input')?.focus(); };
-  const handleSendPrivateMessage = (msg, recipient) => showToast('Mensaje privado enviado', 'success');
+  const handleSendPrivateMessage = (msg, recipient) => {
+     addSystemMessage(`> (Mensaje privado a ${recipient}): ${msg}`);
+     showToast('Mensaje privado enviado', 'success');
+  }
 
   return (
     <>
@@ -151,14 +226,15 @@ const ChatScreen = ({ showToast }) => {
           </div>
           <div className="header-right">
             <button className="header-btn" onClick={() => navigate('/channels')} title="Cambiar de canal"><span className="mesh-label">#mesh</span></button>
-            <button className="header-btn" onClick={() => navigate('/network')} title="Ver red de contactos"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.66-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3s-1.66-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="var(--text-secondary)"/></svg><span className="peer-count">0</span></button>
-            <button className="header-btn" onClick={() => setShowQRIdentity(true)} title="Mostrar mi código QR"><svg width="20" height="20" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2"/><rect x="14" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2"/><rect x="3" y="14" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2"/><path d="M14 14h3v3h-3zM18 14h3v3h-3zM14 18h3v3h-3z" fill="var(--text-secondary)"/></svg></button>
-            <button className="header-btn menu-dots-btn" onClick={() => setShowFloatingMenu(true)} title="Ver más opciones"><svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="6" r="2" fill="var(--text-secondary)"/><circle cx="12" cy="12" r="2" fill="var(--text-secondary)"/><circle cx="12" cy="18" r="2" fill="var(--text-secondary)"/></svg></button>
+            <button className="header-btn" onClick={() => navigate('/network')} title="Ver red de contactos"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg><span className="peer-count">0</span></button>
+            <button className="header-btn" onClick={() => setShowQRIdentity(true)} title="Mostrar mi código QR"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M7 7h.01"/><path d="M17 7h.01"/><path d="M7 17h.01"/><path d="M17 17h.01"/></svg></button>
+            <button className="header-btn menu-dots-btn" onClick={() => setShowFloatingMenu(true)} title="Ver más opciones"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
           </div>
         </div>
         <div className="chat-messages">
           {messages.map((msg) => (
             <div key={msg.id} className={`message ${msg.sender === 'me' ? 'sent' : 'received'} ${msg.isSystem ? 'system-message' : ''}`}>
+                {msg.isSystem && <span className="message-prefix">$&gt;</span>}
                 {msg.text && <span className="message-text">{msg.text}</span>}
                 <span className="message-time">[{msg.time}]</span>
             </div>
@@ -168,7 +244,7 @@ const ChatScreen = ({ showToast }) => {
           <TypingHint show={showTypingHint} />
           {showCommandSuggestions && <CommandSuggestions input={message} onSelectCommand={handleSelectCommand} onClose={() => setShowCommandSuggestions(false)} />}
           <div className={`input-wrapper ${isInputFocused || message ? 'focused' : ''}`}>
-            <button className="attach-btn" onClick={handleAddAttachment} title="Más acciones"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/></svg></button>
+            <button className="attach-btn" onClick={handleAddAttachment} title="Más acciones"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
             <input
               type="text"
               className="message-input"
@@ -179,7 +255,7 @@ const ChatScreen = ({ showToast }) => {
               onBlur={handleInputBlur}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
             />
-            <button className="send-btn" onClick={handleSendMessage} title="Enviar mensaje"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z" fill="var(--accent-primary)"/></svg></button>
+            <button className="send-btn" onClick={handleSendMessage} title="Enviar mensaje"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="var(--accent-primary)"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg></button>
           </div>
         </div>
       </div>
