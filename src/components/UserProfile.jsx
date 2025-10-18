@@ -15,7 +15,7 @@ const UserProfile = ({ onBack }) => {
       <div className="menu-view-content user-profile-content">
         <div className="profile-header">
           <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="User Avatar" className="profile-avatar" />
-          <button className="btn-secondary">Cambiar Avatar</button>
+          <button className="btn btn-secondary">Cambiar Avatar</button>
         </div>
 
         <form className="profile-form">
@@ -28,8 +28,8 @@ const UserProfile = ({ onBack }) => {
             <input type="text" id="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
           </div>
           <div className="form-actions">
-            <button type="button" className="btn-secondary" onClick={onBack}>Cancelar</button>
-            <button type="submit" className="btn-primary">Guardar Cambios</button>
+            <button type="button" className="btn btn-secondary" onClick={onBack}>Cancelar</button>
+            <button type="submit" className="btn btn-primary">Guardar Cambios</button>
           </div>
         </form>
       </div>
