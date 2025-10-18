@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LocationChannels.css'
 
-const LocationChannels = ({ onClose, showToast }) => {
+const LocationChannels = ({ showToast }) => {
+  const navigate = useNavigate();
   const initialChannels = [
     { id: 1, name: 'mesh', type: 'mesh', count: 0, range: '~5-20 m', icon: '✓', active: true, joined: true },
     { id: 2, name: 'bluetooth', type: 'bluetooth', count: 10, range: '~5-20 m', icon: '📶', joined: false },
@@ -25,7 +27,7 @@ const LocationChannels = ({ onClose, showToast }) => {
 
   return (
     <div className="location-channels">
-      <div className="channels-overlay" onClick={onClose}></div>
+      <div className="channels-overlay" onClick={() => navigate('/chat')}></div>
 
       <div className="channels-panel">
         <div className="channels-header">
@@ -39,7 +41,7 @@ const LocationChannels = ({ onClose, showToast }) => {
             </svg>
           </div>
           <h2 className="channels-title">location channels</h2>
-          <button className="close-btn" onClick={onClose}>
+          <button className="close-btn" onClick={() => navigate('/chat')}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M18 6L6 18M6 6l12 12" stroke="var(--text-secondary)" strokeWidth="2" strokeLinecap="round"/>
             </svg>

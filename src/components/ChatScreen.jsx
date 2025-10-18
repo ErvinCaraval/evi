@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ChatScreen.css';
 import ClearMessages from './ClearMessages';
 import ContactActions from './ContactActions';
@@ -13,7 +14,8 @@ import CommandSuggestions from './CommandSuggestions';
 import TypingHint from './TypingHint';
 import { mockUsers, mockMessages, generateRandomReply } from '../utils/mockData';
 
-const ChatScreen = ({ onOpenChannels, onOpenNetwork, showToast }) => {
+const ChatScreen = ({ showToast }) => {
+  const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState(mockMessages);
   const [showClearMessages, setShowClearMessages] = useState(false);
@@ -148,8 +150,8 @@ const ChatScreen = ({ onOpenChannels, onOpenNetwork, showToast }) => {
             <span className="user-name">/@anon9680</span>
           </div>
           <div className="header-right">
-            <button className="header-btn" onClick={onOpenChannels} title="Cambiar de canal"><span className="mesh-label">#mesh</span></button>
-            <button className="header-btn" onClick={() => handleInitiateAction(null)} title="Ver usuarios conectados"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.66-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3s-1.66-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="var(--text-secondary)"/></svg><span className="peer-count">0</span></button>
+            <button className="header-btn" onClick={() => navigate('/channels')} title="Cambiar de canal"><span className="mesh-label">#mesh</span></button>
+            <button className="header-btn" onClick={() => navigate('/network')} title="Ver red de contactos"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.66-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3s-1.66-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="var(--text-secondary)"/></svg><span className="peer-count">0</span></button>
             <button className="header-btn" onClick={() => setShowQRIdentity(true)} title="Mostrar mi código QR"><svg width="20" height="20" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2"/><rect x="14" y="3" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2"/><rect x="3" y="14" width="7" height="7" stroke="var(--text-secondary)" strokeWidth="2"/><path d="M14 14h3v3h-3zM18 14h3v3h-3zM14 18h3v3h-3z" fill="var(--text-secondary)"/></svg></button>
             <button className="header-btn menu-dots-btn" onClick={() => setShowFloatingMenu(true)} title="Ver más opciones"><svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="6" r="2" fill="var(--text-secondary)"/><circle cx="12" cy="12" r="2" fill="var(--text-secondary)"/><circle cx="12" cy="18" r="2" fill="var(--text-secondary)"/></svg></button>
           </div>

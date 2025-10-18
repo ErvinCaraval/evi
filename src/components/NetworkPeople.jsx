@@ -1,8 +1,11 @@
+
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './NetworkPeople.css';
 import { mockUsers } from '../utils/mockData';
 
-const NetworkPeople = ({ onClose, showToast }) => {
+const NetworkPeople = ({ showToast }) => {
+  const navigate = useNavigate();
   const [peers, setPeers] = useState([]);
   const [selectedPeer, setSelectedPeer] = useState(null);
 
@@ -35,11 +38,11 @@ const NetworkPeople = ({ onClose, showToast }) => {
 
   return (
     <div className="network-people">
-      <div className="network-overlay" onClick={onClose}></div>
+      <div className="network-overlay" onClick={() => navigate('/chat')}></div>
       <div className="network-panel">
         <div className="network-header">
           <h2 className="network-title">MAPA DE LA RED</h2>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <button className="close-btn" onClick={() => navigate('/chat')}>×</button>
         </div>
 
         <div className="network-map-container">
