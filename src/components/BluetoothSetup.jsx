@@ -24,7 +24,7 @@ const NetworkVisualization = ({ isEnabled }) => (
     </svg>
 );
 
-const BluetoothSetup = ({ onNext }) => {
+const BluetoothSetup = ({ onNext, showToast }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [isEnabled, setIsEnabled] = useState(false)
 
@@ -34,6 +34,9 @@ const BluetoothSetup = ({ onNext }) => {
 
   const handleEnable = () => {
     setIsEnabled(true)
+    if (showToast) {
+      showToast('Bluetooth activado', 'success')
+    }
     setTimeout(() => {
       if (onNext && !skipRequested) onNext()
     }, 700)

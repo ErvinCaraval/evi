@@ -28,8 +28,8 @@ const OnboardingManager = ({ showToast }) => {
     { path: '/', Component: WelcomeScreen, props: { onNext: () => navigate('/location') } },
     { path: '/location', Component: LocationPermission, props: { onComplete: (status) => handlePermissionResult(status, 'ubicación', '/notification') } },
     { path: '/notification', Component: NotificationPermission, props: { onComplete: (status) => handlePermissionResult(status, 'notificaciones', '/bluetooth') } },
-    { path: '/bluetooth', Component: BluetoothSetup, props: { onNext: () => navigate('/battery') } },
-    { path: '/battery', Component: BatteryOptimization, props: { onNext: () => navigate('/chat') } },
+    { path: '/bluetooth', Component: BluetoothSetup, props: { onNext: () => navigate('/battery'), showToast } },
+    { path: '/battery', Component: BatteryOptimization, props: { onNext: () => navigate('/chat'), showToast } },
   ];
 
   return (

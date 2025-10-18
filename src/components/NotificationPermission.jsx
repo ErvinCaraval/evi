@@ -42,7 +42,7 @@ const NotificationPermission = ({ onComplete }) => {
 
   return (
     <div className={`permission-modal ${isVisible ? 'visible' : ''}`}>
-      <div className="permission-backdrop" onClick={() => handleAction('deny')} />
+      <div className="permission-backdrop" onClick={() => handleAction('denied')} />
 
       <div className="permission-card">
         <div className="permission-icon-wrapper">
@@ -91,10 +91,10 @@ const NotificationPermission = ({ onComplete }) => {
         </div>
 
         <div className="permission-actions">
-          <button className="btn btn-primary" onClick={() => handleAction('allow')}>
+          <button className="btn btn-primary" onClick={() => handleAction('granted')}>
             Activar notificaciones
           </button>
-          <button className="btn btn-secondary" onClick={() => handleAction('deny')}>
+          <button className="btn btn-secondary" onClick={() => handleAction('denied')}>
             Ahora no
           </button>
         </div>
