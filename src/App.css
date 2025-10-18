@@ -212,16 +212,16 @@
 
 @media (max-width: 480px) {
   .app {
-    background: var(--bg-primary);
-    align-items: stretch;
-    justify-content: stretch;
+    width: 100%;
+    height: 100vh;
+    padding: 0;
   }
-  
+
   .smartphone-frame {
     width: 100%;
     height: 100%;
-    padding: 0;
     border-radius: 0;
+    padding: 0;
     background-color: var(--bg-primary);
     box-shadow: none;
   }
@@ -240,6 +240,7 @@
   }
   
   .app-main {
-    padding: 0; /* Adjusted for edge-to-edge components */
+    flex: 1;
+    overflow-y: auto;
   }
 }
